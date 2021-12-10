@@ -1,0 +1,6 @@
+<van-tabbar active-color="#ab0005" inactive-color="#999999" active="{{ active }}" bind:change="onChange">
+    <van-tabbar-item icon="fire">现在</van-tabbar-item>
+    <van-tabbar-item icon="todo-list">死线</van-tabbar-item>
+    <van-tabbar-item icon="friends">外包</van-tabbar-item>
+    <van-tabbar-item icon="setting">设置</van-tabbar-item>
+</van-tabbar>
