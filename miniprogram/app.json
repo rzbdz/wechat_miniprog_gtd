@@ -4,13 +4,38 @@
         "pages/community/community",
         "pages/ddldetail/ddldetail",
         "pages/now/now",
-        "pages/setting/setting"
+        "pages/setting/setting",
+        "custom-tab-bar/index"
     ],
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#ab0005",
-        "navigationBarTitleText": "TodoList ????",
+        "navigationBarTitleText": "Todo Bag Male Head",
         "navigationBarTextStyle": "white"
+    },
+    "tabBar": {
+        "custom": true,
+        "color": "#000000",
+        "selectedColor": "#000000",
+        "backgroundColor": "#000000",
+        "list": [
+            {
+                "pagePath": "pages/now/now",
+                "text": "现在"
+            },
+            {
+                "pagePath": "pages/deadline/deadline",
+                "text": "死线"
+            },
+            {
+                "pagePath": "pages/community/community",
+                "text": "外包"
+            },
+            {
+                "pagePath": "pages/setting/setting",
+                "text": "设置"
+            }
+        ]
     },
     "sitemapLocation": "sitemap.json",
     "usingComponents": {

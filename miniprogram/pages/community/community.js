@@ -46,6 +46,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
+        this.getTabBar().init();
 
     },
 
@@ -85,18 +86,19 @@ Page({
     },
 
     onChange: function (event) {
-        this.setData({
-            active: event.detail
-        });
-        const db = wx.cloud.database();
-        const todos = db.collection('todos')
-        todos.add({
-            data: {
-                description: "fuck you"
-            },
-        }).then(res => {
-            console.log(res)
-        })
-
+        switch (event.detail) {
+            case 0:
+                getApp().st("/pages/now/now")
+                break;
+            case 1:
+                getApp().st("/pages/deadline/deadline")
+                break;
+            case 2:
+                getApp().st("/pages/community/community")
+                break;
+            case 3:
+                getApp().st("/pages/setting/setting")
+                break;
+        }
     }
 })
