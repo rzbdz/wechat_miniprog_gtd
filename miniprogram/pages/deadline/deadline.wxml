@@ -14,9 +14,7 @@
             <view class='card-kv'>
               <text style="font-weight: bold;">时间:
               </text>
-              <text id='card-des-ddl'>{{item.ddl}}
-
-              </text>
+              <text id='card-des-ddl'>{{item.ddl}}</text>
               <van-tag type='primary'>
                 {{item.countdown}}天
               </van-tag>

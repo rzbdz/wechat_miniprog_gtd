@@ -33,7 +33,7 @@ Component({
                 active: e.detail
             })
         },
-        init() {
+        init: function() {
             const page = getCurrentPages().pop();
             this.setData({
                 active: this.data.list.findIndex(item => item.pagePath === `/${page.route}`)
