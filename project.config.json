@@ -52,7 +52,7 @@
   "projectname": "wechat_miniprog_gtd",
   "miniprogramRoot": "miniprogram/",
   "cloudfunctionRoot": "cloudfunctions/",
-  "cloudfunctionTemplateRoot": "",
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
   "watchOptions": {
     "ignore": []
   },

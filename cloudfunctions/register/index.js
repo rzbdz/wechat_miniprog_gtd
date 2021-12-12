@@ -14,21 +14,42 @@ exports.main = async (event, context) => {
   }
   const db = cloud.database()
   const users = db.collection('users')
+  const todos = db.collection('todos')
   const re = await users.where({
     _openid: meta.openid
   }).get();
-  if (re.data.length > 0) return {
-    res: re,
-    msg: "registered already!"
+  var msg
+  dt = {
+    _openid: meta.openid,
+    _projects: []
   };
-  const res = await users.add({
-    data: {
-      _description: "one new user",
-      _openid: meta.openid,
-      _register_date: Date.now(),
-    },
-  })
-  return {
-    res
+  if (re.data.length > 0) {
+    msg = 'already registered!'
+    const mytodos = await todos.where({
+      _openid: meta.openid
+    }).get();
+    if (mytodos.data.length == 0) {
+      c = await todos.add({
+        data: dt
+			})
+			console.log(c)
+      return { message: msg, result: dt };
+    } else {
+      return { message: msg, result: mytodos.data[0] };
+    }
+  } else {
+    const res = await users.add({
+      data: {
+        _description: "one new user",
+        _openid: meta.openid,
+        _register_date: Date.now(),
+      },
+    })
+    msg = 'registered sucess!'
+    c = await todos.add({
+      data: dt
+		})
+		console.log(c)
+    return { message: msg, result: dt };
   }
 }
