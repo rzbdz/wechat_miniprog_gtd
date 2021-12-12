@@ -5,11 +5,15 @@ App({
     this.globalData = {
       // 用于存储待办记录的集合名称
       collection: 'todo',
+      cachedopenid: "",
       // 最大文件上传数量
       fileLimit: 2
     }
+    
+    await this.getOpenId();
+    console.log(this.globalData.cachedopenid)
   },
-  st: function (to) {
+  st: function(to) {
     wx.navigateTo({
       url: to,
     })
@@ -27,7 +31,7 @@ App({
         resourceEnv: shareinfo.envid,
       })
       // 装载云函数操作对象返回方法
-      this.cloud = async function () {
+      this.cloud = async function() {
         if (this.flag != true) { // 如果第一次使用返回方法，还没初始化
           await this.c1.init() // 初始化一下
           this.flag = true // 设置为已经初始化
@@ -60,15 +64,10 @@ App({
 
   // 获取用户唯一标识，兼容不同环境模式
   async getOpenId() {
-    const {
-      result: {
-        openid,
-        fromopenid
-      }
-    } = await (await this.cloud()).callFunction({
-      name: 'getOpenId'
-    })
-    if (openid !== "") return openid
-    return fromopenid
+    const openid = (await (await this.cloud()).callFunction({
+      name: 'mylogin'
+    })).result.openid;
+    if (openid !== "") return this.globalData.cachedopenid = openid;
+    return this.globalData.cachedopenid = fromopenid
   }
 })
