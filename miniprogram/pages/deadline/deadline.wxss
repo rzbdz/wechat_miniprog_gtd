@@ -1,12 +1,63 @@
 
+.card-value{
+    text-align: right;
+}
+.card-key{
+    text-align: left;
+    font-weight:bold;
+}
 .card {
-    border-radius: 3px;
-    box-shadow: 0px 0px 5px 3px #DDDDDD;
+    border-radius: 8px;
+    box-shadow: 1px 2px 5px 3px #DDDDDD;
     margin: 32px 32px 32px 32px;
     padding: 16px 16px 16px 16px;
-    background-color: #DDDDDD;
+    background-color: white;
 }
-
+#card-description{
+    display: flex;
+    flex-direction: column;
+}
+#card-des-title{
+    font-weight: bolder;
+    font-size: 1.2rem;
+    color: #aa0005;
+    text-align: left;
+    text-overflow:ellipsis;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    white-space: nowrap;
+}
+.card-kv{
+    display: flex; 
+    flex-direction: row ;
+    justify-content: space-between;
+    align-items: center;
+}
+.card-tags{
+    display: flex; 
+    align-items: center;
+    flex-direction: row ;
+}
+.card-tags van-tag{
+    margin-left: 0px;
+    margin-right: 4px;
+}
+.addbutton{
+    height: 12vw;
+    width: 12vw;
+    background-color: #aa0005;
+    position:fixed;
+    border-radius: 50%;
+    box-shadow: 1px 2px 3px 2px #DDDDDD;
+    bottom: 6rem;
+    right: 6vw;
+    z-index: 9999;
+  }
 .circlet {
     color: white;
+}
+.circlet text{
+    font-size:20px; 
+    color: #ab0005; 
+    font-weight:bolder;
 }
