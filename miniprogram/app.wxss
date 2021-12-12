@@ -1,9 +1,11 @@
-
+:root{
+  --main-red:#ab0005;
+  --main-gray:#DDDDDD;
+}
 .sv {
   height: calc(100vh - 50px);
   width: 100vw;
 }
-
 
 .van-ellipsis {
   overflow: hidden;
