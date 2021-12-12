@@ -6,13 +6,13 @@ App({
       // 用于存储待办记录的集合名称
       collection: 'todo',
       cachedopenid: "",
-      // 最大文件上传数量
-      fileLimit: 2
     }
-    
-    await this.getOpenId();
-    console.log(this.globalData.cachedopenid)
+    console.log((await (await this.cloud()).callFunction({
+      name: 'register'
+    })).result);
   },
+  
+
   st: function(to) {
     wx.navigateTo({
       url: to,

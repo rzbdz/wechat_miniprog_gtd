@@ -133,6 +133,7 @@ Page({
     }
     // const db = wx.cloud.database();
     // const todos = db.collection('todos')
+    // db.col.where({_id:_.neq(0)}).remove()
     // todos.add({
     //     data: {
     //         description: "fuck you"
