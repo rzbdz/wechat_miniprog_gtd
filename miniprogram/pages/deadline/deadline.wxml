@@ -1,8 +1,56 @@
-<view style="min-height: 100vh;width: 100vw; overflow: hidden;">
-    <scroll-view class = "sv" placeholder="true" scroll-y="true">
-        <view wx:for="{{catcatarr}}" wx:key="catcat" class="card">
-            <van-circle class="circlet" value="{{ item.catcatpro }}" stroke-width="8" layer-color="white" color="#ab0005" />
-            <text>{{item.catcat}}</text>
-        </view>
-    </scroll-view>
+<view
+  style="min-height: 100vh;width: 100vw; overflow: hidden;">
+
+  <scroll-view class="sv"
+    placeholder="true" scroll-y="true">
+    <view wx:for="{{ddllist}}"
+      wx:key="pid" class="card">
+      <van-row>
+        <van-col span="10">
+          <van-circle class="circlet"
+            value="{{ item.pro}}"
+            stroke-width="8"
+            layer-color="#DDDDDD"
+            color="#ab0005">
+            <text>{{item.score}}</text>
+          </van-circle>
+        </van-col>
+        <van-col span="14">
+          <view id='card-description'>
+            <text
+              id='card-des-title'>{{item.title}}</text>
+            <view class='card-kv'>
+              <text
+                style="font-weight: bold;">时间:
+              </text>
+              <text
+                id='card-des-ddl'>{{item.ddl}}
+              </text>
+              <van-tag type='primary'>
+                {{item.countdown}}天
+              </van-tag>
+            </view>
+            <view>
+                <text style="font-size: small;">第 {{item.done}} 步, 共 {{item.total}} 步</text>
+            </view>
+            <view class='card-tags'>
+              <van-tag type='danger'>
+                {{item.outofdate}}超限
+              </van-tag>
+              <van-tag type='success'>
+                {{item.cando}}可做
+              </van-tag>
+              <van-tag type='warning'>
+                {{item.wait}}等待
+              </van-tag>
+            </view>
+          </view>
+        </van-col>
+      </van-row>
+    </view>
+    <view style="min-height: 20vh" />
+  </scroll-view>
+  <van-icon class="addbutton"
+    size='16px' color="white"
+    name="plus" />
 </view>
