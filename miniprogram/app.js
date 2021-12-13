@@ -14,6 +14,7 @@ App({
     // _id: "xxx"
     // _openid: "xxx"
     // _projects: []
+    
   },
 
   st: function(to) {

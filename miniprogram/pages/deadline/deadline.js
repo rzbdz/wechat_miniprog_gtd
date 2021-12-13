@@ -51,6 +51,21 @@ Page({
         '非洲水电', 90,
         "2022-09-22", 2, 20, 10,
         10, 10, 100, [], 'A-'));
+    this.data.ddllist.push(this
+      .ddlcreator('asdfa',
+        '美国大坝', 90,
+        "2022-09-22", 2, 20, 10,
+        10, 10, 100, [], 'A-'));
+    this.data.ddllist.push(this
+      .ddlcreator('asdfa',
+        "洲际导弹订单", 45,
+        "2022-09-22", 2, 3, 10,
+        10, 1, 22, [], 'A-'));
+    this.data.ddllist.push(this
+      .ddlcreator('asdfa',
+        '非洲水电', 90,
+        "2022-09-22", 2, 20, 10,
+        10, 10, 100, [], 'A-'));
     this.setData({
       ddllist: this.data
         .ddllist
