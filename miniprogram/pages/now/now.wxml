@@ -1,3 +1,12 @@
-<view style="display: grid;">
-
+<view id='container'>
+  <scroll-view scroll-y='true' class="sv">
+    <view id='recm-block' wx:for="{{lists}}" wx:key="description">
+      <view id='recm-block-header'>{{item.description}}</view>
+      <view id='recm-inner-card' wx:for="{{item.list}}" wx:key="iid">
+        <van-row>
+					<checkbox/>
+        </van-row>
+      </view>>
+    </view>
+  </scroll-view>
 </view>

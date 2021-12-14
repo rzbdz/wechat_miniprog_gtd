@@ -40,9 +40,11 @@ exports.main = async (event, context) => {
   } else {
     const res = await users.add({
       data: {
-        _description: "one new user",
         _openid: meta.openid,
+        _description: "one new user",
         _register_date: Date.now(),
+        _share_id: "",
+        _reputation: ""
       },
     })
     msg = 'registered sucess!'

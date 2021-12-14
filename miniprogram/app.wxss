@@ -1,6 +1,33 @@
+@import 'miniprogram_npm/weui-miniprogram/weui-wxss/dist/style/weui.wxss';
 :root{
   --main-red:#ab0005;
   --main-gray:#DDDDDD;
+}
+
+checkbox{
+	width: 45rpx;
+	height: 45rpx;
+}
+
+checkbox .wx-checkbox-input{
+	width: 45rpx;
+	height: 45rpx;
+	border-radius: 50%;
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked{
+	background: #ab0005;
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+  width: 36rpx;
+  height: 36rpx;
+  line-height: 36rpx;
+  text-align: center;
+	font-size: 22rpx;
+	font-weight: bold;
+  color: white;
+  background: transparent;
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
 }
 .sv {
   height: calc(100vh - 50px);
