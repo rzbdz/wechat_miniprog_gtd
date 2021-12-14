@@ -2,42 +2,39 @@
 
   <scroll-view class="sv" placeholder="true" scroll-y="true">
     <view wx:for="{{ddllist}}" wx:key="pid" class="card" bindtap="cardclicked" data-pid="{{item.pid}}">
-      <van-row>
-        <van-col span="10">
-          <van-circle class="circlet" value="{{ item.pro}}" stroke-width="8" layer-color="#DDDDDD" color="#ab0005">
-            <text>{{item.score}}</text>
-          </van-circle>
-        </van-col>
-        <van-col span="14">
-          <view id='card-description'>
-            <text id='card-des-title'>{{item.title}}</text>
-            <view class='card-kv'>
-              <text style="font-weight: bold;">时间:
-              </text>
-              <text id='card-des-ddl'>{{item.ddl}}</text>
-              <van-tag type='primary'>
-                {{item.countdown}}天
-              </van-tag>
-            </view>
-            <view>
-              <view style="font-size: small;">
-                第 {{item.done}} 步, 共 {{item.total}} 步
-              </view>
-            </view>
-            <view class='card-tags'>
-              <van-tag type='danger'>
-                {{item.outofdate}}超限
-              </van-tag>
-              <van-tag type='success'>
-                {{item.cando}}可做
-              </van-tag>
-              <van-tag type='warning'>
-                {{item.wait}}等待
-              </van-tag>
+      <view id='card-row'>
+        <van-circle size="80" class="circlet" value="{{ item.pro}}" stroke-width="8" layer-color="#DDDDDD"
+          color="#ab0005">
+          <text>{{item.score}}</text>
+        </van-circle>
+        <view id='card-description'>
+          <text id='card-des-title'>{{item.title}}</text>
+          <view class='card-kv'>
+            <text class='right-margin' style="font-weight: bold;">时间:
+            </text>
+            <text class='right-margin' id='card-des-ddl'>{{item.ddl}}</text>
+            <van-tag class='right-margin' type='{{item.countdown <= 0 ? "danger" : "primary"}}'>
+              {{item.countdown}}天
+            </van-tag>
+          </view>
+          <view>
+            <view style="font-size: small;">
+              第 {{item.done}} 步, 共 {{item.total}} 步
             </view>
           </view>
-        </van-col>
-      </van-row>
+          <view class='card-tags'>
+            <van-tag type='danger'>
+              {{item.outofdate}}超限
+            </van-tag>
+            <van-tag type='primary'>
+              {{item.cando}}可做
+            </van-tag>
+            <van-tag type='warning'>
+              {{item.wait}}等待
+            </van-tag>
+          </view>
+        </view>
+      </view>
     </view>
     <view style="min-height: 20vh" />
   </scroll-view>
