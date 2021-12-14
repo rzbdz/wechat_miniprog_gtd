@@ -1,12 +1,33 @@
 <view id='container'>
-  <scroll-view scroll-y='true' class="sv">
+  <scroll-view placeholder="true" scroll-y='true' class="sv">
     <view id='recm-block' wx:for="{{lists}}" wx:key="description">
-      <view id='recm-block-header'>{{item.description}}</view>
-      <view id='recm-inner-card' wx:for="{{item.list}}" wx:key="iid">
-        <van-row>
-					<checkbox/>
-        </van-row>
-      </view>>
+      <view bindtap="foldExpand" id='recm-block-header' data-index="{{index}}">
+        <van-icon style="margin-right: 10px;" name="{{item.fold == true ? 'arrow' :'arrow-down'}}"></van-icon>
+        <view>{{item.description}}</view>
+      </view>
+      <view wx:if="{{item.fold == false}}">
+        <view id='recm-inner-card' wx:for="{{item.list}}" wx:key="iid">
+          <view id='recm-left'>
+            <view id='recm-title-tag'>
+              <view class='right-margin'>{{item.title}}</view>
+              <van-tag type="success" class='right-margin'>{{item.tag}}</van-tag>
+              <view id='recm-type'>
+                <van-tag class='right-margin' wx:if="{{item.outofdate == true}}" type="danger">超限</van-tag>
+                <van-tag class='right-margin' wx:if="{{item.waiting == true}}" type="warning">等待</van-tag>
+                <van-tag class='right-margin' wx:else type="primary">可做</van-tag>
+              </view>
+            </view>
+            <view id='recm-project-date'>
+              <view class='right-margin'>{{item.project}}</view>
+              <view class='right-margin'>{{item.date}}</view>
+            </view>
+          </view>
+          <view id='recm-checkbox'>
+            <checkbox />
+          </view>
+        </view>
+      </view>
     </view>
+    <view style="min-height: 20vh" />
   </scroll-view>
 </view>
