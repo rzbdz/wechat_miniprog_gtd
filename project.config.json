@@ -47,7 +47,7 @@
     "useCompilerPlugins": false
   },
   "compileType": "miniprogram",
-  "libVersion": "2.20.1",
+  "libVersion": "2.19.6",
   "appid": "wxb70ed882c10bf1dc",
   "projectname": "wechat_miniprog_gtd",
   "miniprogramRoot": "miniprogram/",

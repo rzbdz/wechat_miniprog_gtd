@@ -3,31 +3,40 @@
   --main-red:#ab0005;
   --main-gray:#DDDDDD;
 }
+page{
+  --main-red:#ab0005;
+  --main-gray:#DDDDDD;
+}
 
 checkbox{
-	width: 45rpx;
-	height: 45rpx;
+	width: 50rpx;
+	height: 50rpx;
 }
 
 checkbox .wx-checkbox-input{
-	width: 45rpx;
-	height: 45rpx;
+	width: 50rpx;
+	height: 50rpx;
 	border-radius: 50%;
 }
 checkbox .wx-checkbox-input.wx-checkbox-input-checked{
-	background: #ab0005;
+  background: #ab0005;
+  border-style: hidden;
 }
 checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
-  width: 36rpx;
-  height: 36rpx;
-  line-height: 36rpx;
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
   text-align: center;
-	font-size: 22rpx;
+	font-size: 24rpx;
 	font-weight: bold;
   color: white;
   background: transparent;
   transform: translate(-50%, -50%) scale(1);
   -webkit-transform: translate(-50%, -50%) scale(1);
+}
+
+.right-margin{
+	margin-right: 14rpx;
 }
 .sv {
   height: calc(100vh - 50px);

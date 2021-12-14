@@ -10,7 +10,7 @@
         <view id='card-description'>
           <text id='card-des-title'>{{item.title}}</text>
           <view class='card-kv'>
-            <text class='right-margin' style="font-weight: bold;">时间:
+            <text class='right-margin' style="font-weight: bold;">死的线路:
             </text>
             <text class='right-margin' id='card-des-ddl'>{{item.ddl}}</text>
             <van-tag class='right-margin' type='{{item.countdown <= 0 ? "danger" : "primary"}}'>
