@@ -13,6 +13,7 @@ Component({
         waiting: false,
         project: 'XXXXX',
         date: 'XXXX-XX-XX',
+        done: false,
         iid: 'abcdefg-test-iid-no-unique'
       },
     },
@@ -28,7 +29,12 @@ Component({
    */
   methods: {
     _entryclicked() {
+      console.log('in compo entry', this.data.entry.iid);
       this.triggerEvent("click", this.data.entry.iid);
+    },
+    _checkboxchange(e) {
+      console.log('in compo entry', e);
+      this.triggerEvent("check", { iid: this.data.entry.iid, check: e.detail.value });
     },
   }
 })

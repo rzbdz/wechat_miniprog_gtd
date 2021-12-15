@@ -10,7 +10,7 @@ page{
   --normal-margin: 14rpx;
 }
 
-checkbox{
+checkbox {
 	width: 50rpx;
 	height: 50rpx;
 }
@@ -25,6 +25,29 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked{
   border-style: hidden;
 }
 checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  text-align: center;
+	font-size: 24rpx;
+	font-weight: bold;
+  color: white;
+  background: transparent;
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
+}
+
+
+switch .wx-checkbox-input{
+	width: 50rpx;
+	height: 50rpx;
+	border-radius: 50%;
+}
+switch .wx-checkbox-input.wx-checkbox-input-checked{
+  background: #ab0005;
+  border-style: hidden;
+}
+switch .wx-checkbox-input.wx-checkbox-input-checked::before {
   width: 40rpx;
   height: 40rpx;
   line-height: 40rpx;

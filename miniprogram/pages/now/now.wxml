@@ -6,7 +6,7 @@
         <view>{{item.description}}</view>
       </view>
       <view wx:if="{{item.fold == false}}">
-        <entry-card wx:for="{{item.list}}" wx:key='iid' entry="{{item}}" />
+        <entry-card wx:for="{{item.list}}" wx:key='iid' entry="{{item}}" bindcheck="testbind" />
       </view>
     </view>
     <view style="min-height: 20vh" />

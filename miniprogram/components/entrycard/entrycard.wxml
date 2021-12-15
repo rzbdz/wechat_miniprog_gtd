@@ -16,6 +16,6 @@
     </view>
   </view>
   <view class='recm-checkbox'>
-    <checkbox data-iid='{{entry.iid}}' catchtap='_checkboxchange' />
+    <switch checked="{{entry.done}}" bindchange="_checkboxchange" type="checkbox" />
   </view>
 </view>
