@@ -1,3 +1,77 @@
-<view>
-
-</view>
+<scroll-view class='sv'>
+  <view class='hd' style="display: flex;flex-direction: row;justify-content: space-between; align-items: center;">
+    <view class="header-font">自定义标签触发器</view>
+    <van-button color='#ab0005' custom-style="border-radius:4px;" size='small' icon='plus'>添加标签</van-button>
+  </view>
+  <view style="font-size: small; margin: 0px 20px 16px 20px;">
+    <text>
+      每个标签触发器具备最多 4 个时间触发属性, 每 2 小时划分一个时间片和 2 个地理定位触发属性, 定位精度为 50m (可调节功能敬请期待)。
+    </text>
+  </view>
+  <van-divider custom-style="margin: 0px 16px 0px 16px" />
+  <view class='tagcard'>
+    <view class='card-left'>
+      <view class='name-time-row'>
+        <view class='tag-name right-margin'>吃饭</view>
+        <view class='row-time-vec'>
+          <van-tag type='primary' class='right-margin'>3</van-tag>
+          <van-tag type='primary' class="right-margin">5</van-tag>
+          <van-tag type='primary' class="right-margin">12</van-tag>
+          <van-tag type='primary' class="right-margin">18</van-tag>
+        </view>
+      </view>
+      <view class='row-location'>西安电子科技大学(南校区)图书馆</view>
+      <view class='row-location'>西安电子科技大学(南校区)竹园1号</view>
+    </view>
+    <van-icon color='#ab0005' name='clear' size='28px' style="margin-top: 5px;" />
+  </view>
+  <view class='tagcard'>
+    <view class='card-left'>
+      <view class='name-time-row'>
+        <view class='tag-name right-margin'>吃饭</view>
+        <view class='row-time-vec'>
+          <van-tag type='primary' class='right-margin'>3</van-tag>
+          <van-tag type='primary' class="right-margin">5</van-tag>
+          <van-tag type='primary' class="right-margin">12</van-tag>
+          <van-tag type='primary' class="right-margin">18</van-tag>
+        </view>
+      </view>
+      <view class='row-location'>西安电子科技大学(南校区)图书馆</view>
+      <view class='row-location'>西安电子科技大学(南校区)竹园1号</view>
+    </view>
+    <van-icon color='#ab0005' name='clear' size='28px' style="margin-top: 5px;" />
+  </view>
+  <view class='tagcard'>
+    <view class='card-left'>
+      <view class='name-time-row'>
+        <view class='tag-name right-margin'>吃饭</view>
+        <view class='row-time-vec'>
+          <van-tag type='primary' class='right-margin'>3</van-tag>
+          <van-tag type='primary' class="right-margin">5</van-tag>
+          <van-tag type='primary' class="right-margin">12</van-tag>
+          <van-tag type='primary' class="right-margin">18</van-tag>
+        </view>
+      </view>
+      <view class='row-location'>西安电子科技大学(南校区)图书馆</view>
+      <view class='row-location'>西安电子科技大学(南校区)竹园1号</view>
+    </view>
+    <van-icon color='#ab0005' name='clear' size='28px' style="margin-top: 5px;" />
+  </view>
+  <view class='tagcard'>
+    <view class='card-left'>
+      <view class='name-time-row'>
+        <view class='tag-name right-margin'>吃饭</view>
+        <view class='row-time-vec'>
+          <van-tag type='primary' class='right-margin'>3</van-tag>
+          <van-tag type='primary' class="right-margin">5</van-tag>
+          <van-tag type='primary' class="right-margin">12</van-tag>
+          <van-tag type='primary' class="right-margin">18</van-tag>
+        </view>
+      </view>
+      <view class='row-location'>西安电子科技大学(南校区)图书馆</view>
+      <view class='row-location'>西安电子科技大学(南校区)竹园1号</view>
+    </view>
+    <van-icon color='#ab0005' name='clear' size='28px' style="margin-top: 5px;" />
+  </view>
+  <view style="height: 40px;" />
+</scroll-view>

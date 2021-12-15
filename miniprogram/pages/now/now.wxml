@@ -1,7 +1,7 @@
 <view id='container'>
   <scroll-view placeholder="true" scroll-y='true' class="sv">
     <view id='recm-block' wx:for="{{lists}}" wx:key="description">
-      <view bindtap="foldExpand" id='recm-block-header' data-index="{{index}}">
+      <view bindtap="foldExpand" class='header-font' id='recm-block-header' data-index="{{index}}">
         <van-icon style="margin-right: 10px;" name="{{item.fold == true ? 'arrow' :'arrow-down'}}"></van-icon>
         <view>{{item.description}}</view>
       </view>

@@ -23,10 +23,10 @@ Page({
     // console.log(i + ', ' + this.data.lists[i].fold);
   },
   /**
-   * @param {string} title 
-   * @param {string} project 
-   * @param {string} tag 
-   * @param {string} date 
+   * @param  title 
+   * @param  project 
+   * @param  tag 
+   * @param  date 
    *   if today, pass in time, if not today pass in date string.
    * @param {bool} outofdate 
    * @param {int} which 

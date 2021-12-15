@@ -8,6 +8,16 @@ page{
   --main-red:#ab0005;
   --main-gray:#DDDDDD;
   --normal-margin: 14rpx;
+  --card-radius-size: 6px;
+  --card-shawdow: 1px 2px 5px 3px var(--main-gray);
+  --card-margin: 24px;
+  --card-padding: 12px;
+  --header-margin: 16px;
+}
+.header-font{
+	font-size:large;
+	color: var(--main-red);
+	font-weight: bolder;
 }
 
 checkbox {

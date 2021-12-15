@@ -1,1 +1,27 @@
 /* pages/setting/setting.wxss */
+.hd{
+	margin: 16px 16px 0px 16px;
+}
+.right-margin{
+	margin-right: var(--normal-margin);
+}
+.tagcard{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items:center;
+	margin: 10px 20px 10px 20px;
+	padding: 0px 0 10px 0;
+	border-bottom: 1px solid var(--main-gray);
+}
+.tag-name{
+	font-weight: bolder;
+}
+.row-location{
+	font-size:small;
+}
+.name-time-row{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}

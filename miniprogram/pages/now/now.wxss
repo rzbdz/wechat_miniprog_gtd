@@ -18,11 +18,9 @@
 #recm-block-header{
 	display: flex;
 	flex-direction: row;
-	color: var(--main-red);
-	font-size:large;
-	font-weight: bolder;
 	margin: 16px 16px 16px 16px;
 }
+
 #recm-left{
 	display: flex;
 	flex-direction:column;
