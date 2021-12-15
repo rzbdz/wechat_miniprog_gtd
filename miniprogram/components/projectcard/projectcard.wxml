@@ -1,0 +1,36 @@
+<!--components/projectcard/projectcard.wxml-->
+<view class="card" bindtap="_cardclicked">
+  <view class='card-row'>
+    <van-circle size="80" class="circlet" value="{{ project.pro}}" stroke-width="8" layer-color="#DDDDDD"
+      color="#ab0005">
+      <text class="circlet-text">{{project.score}}</text>
+    </van-circle>
+    <view class='card-description'>
+      <text class='card-des-title'>{{project.title}}</text>
+      <view class='card-kv'>
+        <text class='right-margin bold-font'>期限:
+        </text>
+        <text class='right-margin card-des-ddl'>{{project.ddl}}</text>
+        <van-tag class='right-margin' type='{{project.countdown <= 0 ? "danger" : "success"}}'>
+          {{project.countdown}}天
+        </van-tag>
+      </view>
+      <view>
+        <view style="font-size: small;">
+          第 {{project.done}} 步, 共 {{project.total}} 步
+        </view>
+      </view>
+      <view class='card-tags'>
+        <van-tag class='card-tags-van-tag' type='danger'>
+          {{project.outofdate}}超限
+        </van-tag>
+        <van-tag class='card-tags-van-tag' type='success'>
+          {{project.cando}}可做
+        </van-tag>
+        <van-tag class='card-tags-van-tag' type='warning'>
+          {{project.wait}}等待
+        </van-tag>
+      </view>
+    </view>
+  </view>
+</view>

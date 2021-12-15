@@ -40,6 +40,7 @@
   "sitemapLocation": "sitemap.json",
   "usingComponents": {
     "entry-card": "components/entrycard/entrycard",
+    "project-card": "components/projectcard/projectcard",
     "van-icon": "@vant/weapp/icon/index",
     "van-nav-bar": "@vant/weapp/nav-bar/index",
     "van-button": "@vant/weapp/button/index",

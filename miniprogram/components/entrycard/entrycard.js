@@ -30,8 +30,5 @@ Component({
     _entryclicked() {
       this.triggerEvent("click", this.data.entry.iid);
     },
-    _checkboxchange() {
-      this.triggerEvent("check", this.data.entry.iid);
-    }
   }
 })

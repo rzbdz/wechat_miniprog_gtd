@@ -1,0 +1,70 @@
+/* components/projectcard/projectcard.wxss */
+.right-margin{
+	margin-right: var(--normal-margin);
+}
+.bold-font{
+	font-weight: bold;
+}
+.card-value{
+	text-align: right;
+}
+.card-key{
+	text-align: left;
+	font-weight:bold;
+}
+.card {
+	border-radius: 6px;
+	box-shadow: 1px 2px 5px 3px var(--main-gray);
+	margin: 24px 24px 24px 24px;
+	padding: 12px 12px 12px 20px;
+	background-color: white;
+}
+.card-row{ 
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.circle-view{
+	margin-right:20px;
+}
+.card-description{
+	margin-left: 20px;
+	width: inherit;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}
+.card-des-title{
+	font-weight: bolder;
+	font-size: 1.2rem;
+	color: var(--main-red);
+	text-align: left;
+	text-overflow:ellipsis;
+	overflow: hidden;
+	-webkit-line-clamp: 1;
+	white-space: nowrap;
+}
+.card-kv{
+	display: flex; 
+	flex-direction: row ;
+	justify-content: space-between;
+	align-items: center;
+	font-size:14px;
+}
+.card-tags{
+	display: flex; 
+	align-items: center;
+	flex-direction: row ;
+}
+.card-tags-van-tag{
+	margin-left: 0px;
+	margin-right: 4px;
+}
+.circlet {
+	color: white;
+}
+.circlet-text{
+	font-size:20px; 
+	color: var(--main-red); 
+	font-weight:bolder;
+}
