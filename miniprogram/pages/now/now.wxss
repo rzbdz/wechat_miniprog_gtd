@@ -26,6 +26,7 @@
 #recm-left{
 	display: flex;
 	flex-direction:column;
+	flex-grow: 1;
 }
 #recm-title-tag,#recm-project-date{
 	display: flex;

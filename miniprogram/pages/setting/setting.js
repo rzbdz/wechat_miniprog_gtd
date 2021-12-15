@@ -64,20 +64,4 @@ Page({
     onShareAppMessage: function () {
 
     },
-    onChange: function (event) {
-        switch (event.detail) {
-            case 0:
-                getApp().st("/pages/now/now")
-                break;
-            case 1:
-                getApp().st("/pages/deadline/deadline")
-                break;
-            case 2:
-                getApp().st("/pages/community/community")
-                break;
-            case 3:
-                getApp().st("/pages/setting/setting")
-                break;
-        }
-    }
 })

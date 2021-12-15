@@ -124,6 +124,10 @@ Page({
   onShareAppMessage: function() {
 
   },
-
+  entryclicked: function() {
+    wx.navigateTo({
+      url: '/pages/entrydetail/entrydetail',
+    })
+  }
 
 })

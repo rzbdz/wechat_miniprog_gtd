@@ -7,7 +7,7 @@
       </view>
       <view wx:if="{{item.fold == false}}">
         <view id='recm-inner-card' wx:for="{{item.list}}" wx:key="iid">
-          <view id='recm-left'>
+          <view id='recm-left' bindtap='entryclicked'>
             <view id='recm-title-tag'>
               <view class='right-margin'>{{item.title}}</view>
               <van-tag type="success" class='right-margin'>{{item.tag}}</van-tag>

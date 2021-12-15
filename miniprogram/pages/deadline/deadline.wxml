@@ -38,5 +38,5 @@
     </view>
     <view style="min-height: 20vh" />
   </scroll-view>
-  <van-icon class="addbutton" size='16px' color="white" name="plus" />
+  <van-icon bindtap="toaddpage" class="addbutton" size='16px' color="white" name="plus" />
 </view>

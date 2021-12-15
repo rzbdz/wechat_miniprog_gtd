@@ -147,41 +147,28 @@ Page({
   onShareAppMessage: function() {
 
   },
+  cardclicked: function(e) {
+    console.log(e);
+    wx.navigateTo({
+      url: '/pages/ddldetail/ddldetail?id=1',
+      events: {
+        acceptDataFromOpenedPage: function(data) {
+          console.log('in old', data)
+        },
+        someEvent: function(data) {
+          console.log('in old', data)
+        }
+      },
+      success: function(res) {
+        // 通过eventChannel向被打开页面传送数据
+        res.eventChannel.emit('acceptDataFromOpenerPage', { data: 'testfrom old' })
+      }
+    })
+  },
 
-  onChange: function(event) {
-    switch (event
-      .detail) {
-      case 0:
-        getApp().st(
-          "/pages/now/now"
-        )
-        break;
-      case 1:
-        getApp().st(
-          "/pages/deadline/deadline"
-        )
-        break;
-      case 2:
-        getApp().st(
-          "/pages/community/community"
-        )
-        break;
-      case 3:
-        getApp().st(
-          "/pages/setting/setting"
-        )
-        break;
-    }
-    // const db = wx.cloud.database();
-    // const todos = db.collection('todos')
-    // db.col.where({_id:_.neq(0)}).remove()
-    // todos.add({
-    //     data: {
-    //         description: "fuck you"
-    //     },
-    // }).then(res => {
-    //     console.log(res)
-    // })
-
+  toaddpage: function(e) {
+    wx.navigateTo({
+      url: '/pages/addddl/addddl',
+    })
   }
 })
