@@ -2,10 +2,12 @@
 :root{
   --main-red:#ab0005;
   --main-gray:#DDDDDD;
+  --normal-margin: 14rpx;
 }
 page{
   --main-red:#ab0005;
   --main-gray:#DDDDDD;
+  --normal-margin: 14rpx;
 }
 
 checkbox{
@@ -36,7 +38,7 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
 }
 
 .right-margin{
-	margin-right: 14rpx;
+	margin-right: var(--normal-margin);
 }
 .sv {
   height: calc(100vh - 50px);

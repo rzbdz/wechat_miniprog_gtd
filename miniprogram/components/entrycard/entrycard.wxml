@@ -1,0 +1,21 @@
+<!--components/entrycard/entrycard.wxml-->
+<view class='recm-inner-card'>
+  <view class='recm-left' catchtap='_entryclicked'>
+    <view class='recm-title-tag'>
+      <view class='right-margin bold-font'>{{entry.title}}</view>
+      <van-tag type="success" class='right-margin bold-font'>{{entry.tag}}</van-tag>
+      <view class='recm-type'>
+        <van-tag class='right-margin bold-font' wx:if="{{entry.waiting}}" type="warning">等待</van-tag>
+        <van-tag class='right-margin bold-font' wx:if="{{!entry.waiting}}" type="primary">可做</van-tag>
+      </view>
+    </view>
+    <view class='recm-project-date'>
+      <view class='right-margin'>{{entry.project}}</view>
+      <view class='right-margin'>{{entry.date}}</view>
+      <van-tag class='right-margin bold-font' wx:if="{{entry.outofdate}}" type="danger">超限</van-tag>
+    </view>
+  </view>
+  <view class='recm-checkbox'>
+    <checkbox data-iid='{{entry.iid}}' catchtap='_checkboxchange' />
+  </view>
+</view>

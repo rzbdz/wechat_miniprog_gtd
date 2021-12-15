@@ -1,76 +1,76 @@
 {
-	"pages": [
-		"pages/now/now",
-		"pages/deadline/deadline",
-		"pages/community/community",
-		"pages/ddldetail/ddldetail",
-		"pages/setting/setting",
-		"custom-tab-bar/index",
-		"pages/entrydetail/entrydetail"
-	],
-	"window": {
-		"backgroundTextStyle": "light",
-		"navigationBarBackgroundColor": "#ab0005",
-		"navigationBarTitleText": "Todo Bag Male Head",
-		"navigationBarTextStyle": "white"
-	},
-	"tabBar": {
-		"custom": true,
-		"color": "#000000",
-		"selectedColor": "#000000",
-		"backgroundColor": "#000000",
-		"list": [
-			{
-				"pagePath": "pages/now/now",
-				"text": "现在"
-			},
-			{
-				"pagePath": "pages/deadline/deadline",
-				"text": "死线"
-			},
-			{
-				"pagePath": "pages/community/community",
-				"text": "外包"
-			},
-			{
-				"pagePath": "pages/setting/setting",
-				"text": "设置"
-			}
-		]
-	},
-	"sitemapLocation": "sitemap.json",
-	"usingComponents": {
-		"van-icon": "@vant/weapp/icon/index",
-		"van-nav-bar": "@vant/weapp/nav-bar/index",
-		"van-button": "@vant/weapp/button/index",
-		"van-row": "@vant/weapp/row/index",
-		"van-col": "@vant/weapp/col/index",
-		"van-datetime-picker": "@vant/weapp/datetime-picker/index",
-		"van-field": "@vant/weapp/field/index",
-		"van-rate": "@vant/weapp/rate/index",
-		"van-loading": "@vant/weapp/loading/index",
-		"van-notify": "@vant/weapp/notify/index",
-		"van-share-sheet": "@vant/weapp/share-sheet/index",
-		"van-image": "@vant/weapp/image/index",
-		"van-circle": "@vant/weapp/circle/index",
-		"van-empty": "@vant/weapp/empty/index",
-		"van-sticky": "@vant/weapp/sticky/index",
-		"van-tag": "@vant/weapp/tag/index",
-		"van-grid": "@vant/weapp/grid/index",
-		"van-grid-item": "@vant/weapp/grid-item/index",
-		"van-tab": "@vant/weapp/tab/index",
-		"van-tabs": "@vant/weapp/tabs/index",
-		"van-tabbar": "@vant/weapp/tabbar/index",
-		"van-radio": "@vant/weapp/radio/index",
-		"van-radio-group": "@vant/weapp/radio-group/index",
-		"van-tabbar-item": "@vant/weapp/tabbar-item/index",
-		"van-card": "@vant/weapp/card/index",
-		"van-submit-bar": "@vant/weapp/submit-bar/index",
-		"van-goods-action": "@vant/weapp/goods-action/index",
-		"van-goods-action-icon": "@vant/weapp/goods-action-icon/index",
-		"van-goods-action-button": "@vant/weapp/goods-action-button/index",
-		"mp-checkbox-group": "weui-miniprogram/checkbox-group/checkbox-group",
-		"mp-checkbox": "weui-miniprogram/checkbox/checkbox",
-		"mp-cells": "weui-miniprogram/cells/cells"
-	}
+  "pages": [
+    "pages/now/now",
+    "pages/deadline/deadline",
+    "pages/community/community",
+    "pages/ddldetail/ddldetail",
+    "pages/setting/setting",
+    "custom-tab-bar/index",
+    "pages/entrydetail/entrydetail"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ab0005",
+    "navigationBarTitleText": "Todo Bag Male Head",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#000000",
+    "selectedColor": "#000000",
+    "backgroundColor": "#000000",
+    "list": [{
+        "pagePath": "pages/now/now",
+        "text": "现在"
+      },
+      {
+        "pagePath": "pages/deadline/deadline",
+        "text": "死线"
+      },
+      {
+        "pagePath": "pages/community/community",
+        "text": "外包"
+      },
+      {
+        "pagePath": "pages/setting/setting",
+        "text": "设置"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "entry-card": "components/entrycard/entrycard",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-nav-bar": "@vant/weapp/nav-bar/index",
+    "van-button": "@vant/weapp/button/index",
+    "van-row": "@vant/weapp/row/index",
+    "van-col": "@vant/weapp/col/index",
+    "van-datetime-picker": "@vant/weapp/datetime-picker/index",
+    "van-field": "@vant/weapp/field/index",
+    "van-rate": "@vant/weapp/rate/index",
+    "van-loading": "@vant/weapp/loading/index",
+    "van-notify": "@vant/weapp/notify/index",
+    "van-share-sheet": "@vant/weapp/share-sheet/index",
+    "van-image": "@vant/weapp/image/index",
+    "van-circle": "@vant/weapp/circle/index",
+    "van-empty": "@vant/weapp/empty/index",
+    "van-sticky": "@vant/weapp/sticky/index",
+    "van-tag": "@vant/weapp/tag/index",
+    "van-grid": "@vant/weapp/grid/index",
+    "van-grid-item": "@vant/weapp/grid-item/index",
+    "van-tab": "@vant/weapp/tab/index",
+    "van-tabs": "@vant/weapp/tabs/index",
+    "van-tabbar": "@vant/weapp/tabbar/index",
+    "van-radio": "@vant/weapp/radio/index",
+    "van-radio-group": "@vant/weapp/radio-group/index",
+    "van-tabbar-item": "@vant/weapp/tabbar-item/index",
+    "van-card": "@vant/weapp/card/index",
+    "van-submit-bar": "@vant/weapp/submit-bar/index",
+    "van-goods-action": "@vant/weapp/goods-action/index",
+    "van-goods-action-icon": "@vant/weapp/goods-action-icon/index",
+    "van-goods-action-button": "@vant/weapp/goods-action-button/index",
+    "mp-checkbox-group": "weui-miniprogram/checkbox-group/checkbox-group",
+    "mp-checkbox": "weui-miniprogram/checkbox/checkbox",
+    "mp-cells": "weui-miniprogram/cells/cells"
+  }
 }

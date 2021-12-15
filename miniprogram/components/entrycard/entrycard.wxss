@@ -1,0 +1,43 @@
+/* components/entrycard/entrycard.wxss */
+.right-margin{
+	margin-right: var(--normal-margin);
+}
+.recm-inner-card{
+	background-color: white;
+	border-bottom: 1px inset var(--main-gray);
+	margin: 0px 16px 8px 16px;
+	padding: 0px 8px 8px 8px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+.recm-block-header{
+	display: flex;
+	flex-direction: row;
+	color: var(--main-red);
+	font-size:large;
+	font-weight: bolder;
+	margin: 16px 16px 16px 16px;
+}
+.recm-left{
+	display: flex;
+	flex-direction:column;
+	flex-grow: 1;
+}
+.recm-title-tag,.recm-project-date{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.recm-project-date{
+	font-size: small;
+}
+.bold-font{
+	font-weight: bold;
+}
+.recm-type{
+	display: flex; 
+	align-items: center;
+	flex-direction: row ;
+}

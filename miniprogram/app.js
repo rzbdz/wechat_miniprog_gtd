@@ -7,15 +7,14 @@ App({
       cachedopenid: "",
     }
     
-    console.log((await (await this.cloud()).callFunction({
-      name: 'register'
-    })).result);
+    // console.log((await (await this.cloud()).callFunction({
+    //   name: 'register'
+    // })).result);
     // result has a message and a result
     // in result: 
     // _id: "xxx"
     // _openid: "xxx"
     // _projects: []
-
   },
 
   st: function(to) {

@@ -1,2 +1,3 @@
 <!--pages/entrydetail/entrydetail.wxml-->
 <text>pages/entrydetail/entrydetail.wxml</text>
+<entry-card bindcheck='check' bindclick='click' entry='{{myen}}' />
