@@ -35,7 +35,7 @@ Page({
         countdown: -2,
         wait: 999,
         outofdate: 999,
-        cando: 999,
+        cando: 0,
         done: 20,
         total: 90,
         subs: [],
@@ -61,9 +61,9 @@ Page({
         ddl: '2021-12-13',
         countdown: -2,
         wait: 999,
-        outofdate: 999,
+        outofdate: 0,
         cando: 999,
-        done: 20,
+        done: 0,
         total: 90,
         subs: [],
         score: 'S+'
@@ -82,12 +82,12 @@ Page({
     this.data.ddllist.push(this
       .ddlcreator('asafdfa',
         '非洲水电', 90,
-        "2022-09-22", 2, 20, 10,
+        "2022-09-22", 2, 20, 0,
         10, 10, 100, [], 'A-'));
     this.data.ddllist.push(this
       .ddlcreator('asddddfa',
         '美国大坝', 90,
-        "2022-09-22", 2, 20, 10,
+        "2022-09-22", 2, 0, 10,
         10, 10, 100, [], 'A-'));
     this.data.ddllist.push(this
       .ddlcreator('asaf1dfa',

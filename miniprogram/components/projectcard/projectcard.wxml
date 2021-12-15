@@ -21,13 +21,13 @@
         </view>
       </view>
       <view class='card-tags'>
-        <van-tag class='card-tags-van-tag' type='danger'>
+        <van-tag wx:if="{{project.outofdate!=0}}" class='card-tags-van-tag' type='danger'>
           {{project.outofdate}}超限
         </van-tag>
-        <van-tag class='card-tags-van-tag' type='success'>
+        <van-tag wx:if="{{project.cando!=0}}" class='card-tags-van-tag' type='success'>
           {{project.cando}}可做
         </van-tag>
-        <van-tag class='card-tags-van-tag' type='warning'>
+        <van-tag wx:if="{{project.wait!=0}}" class='card-tags-van-tag' type='warning'>
           {{project.wait}}等待
         </van-tag>
       </view>
