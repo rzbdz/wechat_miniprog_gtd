@@ -15,8 +15,8 @@
 
 ## 小程序界面（初版）：
 
-![now](https://gitee.com/rzbdz/wechat_miniprog_gtd/raw/master/.res/now.png)
-![ddl](https://gitee.com/rzbdz/wechat_miniprog_gtd/raw/master/.res/ddl.png)
+![now](./.res/now.png)
+![ddl](./.res/ddl.png)
 
 ---
 # 库表设计
