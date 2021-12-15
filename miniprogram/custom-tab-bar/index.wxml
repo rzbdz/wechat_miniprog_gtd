@@ -1,6 +1,3 @@
 <van-tabbar active-color="#ab0005" inactive-color="#999999" active="{{ active }}" bind:change="onChange">
-    <van-tabbar-item icon="fire">现在</van-tabbar-item>
-    <van-tabbar-item icon="todo-list">死线</van-tabbar-item>
-    <van-tabbar-item icon="friends">社区</van-tabbar-item>
-    <van-tabbar-item icon="setting">设置</van-tabbar-item>
+  <van-tabbar-item wx:for="{{list}}" wx:key="pagePath" icon="{{item.icon}}">{{item.text}}</van-tabbar-item>
 </van-tabbar>

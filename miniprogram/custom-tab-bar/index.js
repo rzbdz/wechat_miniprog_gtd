@@ -7,20 +7,24 @@ Component({
   data: {
     active: 0,
     list: [{
-        "pagePath": "/pages/now/now",
-        "text": "现在"
+        pagePath: "/pages/now/now",
+        text: "现在",
+        icon: "fire"
       },
       {
-        "pagePath": "/pages/deadline/deadline",
-        "text": "死线"
+        pagePath: "/pages/deadline/deadline",
+        text: "死线",
+        icon: "todo-list"
       },
+      // {
+      //   pagePath: "/pages/community/community",
+      //   text: "社区",
+      //   icon: "friends"
+      // },
       {
-        "pagePath": "/pages/community/community",
-        "text": "外包"
-      },
-      {
-        "pagePath": "/pages/setting/setting",
-        "text": "设置"
+        pagePath: "/pages/setting/setting",
+        text: "设置",
+        icon: "setting"
       }
     ]
   },

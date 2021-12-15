@@ -6,10 +6,10 @@ App({
       // 用于存储待办记录的集合名称
       cachedopenid: "",
     }
-    /*
+    
     console.log((await (await this.cloud()).callFunction({
       name: 'register'
-    })).result);*/
+    })).result);
     // result has a message and a result
     // in result: 
     // _id: "xxx"
