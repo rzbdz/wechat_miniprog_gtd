@@ -2,7 +2,7 @@ import * as DateUtil from "./date";
 
 export function createSub(pid, title, duedate, triggerdate, tag, prereq = [], scene = "") {
   return {
-    iid: DateUtil.genUID(),
+    iid: DateUtil.genUID('sub-'),
     pid: pid,
     title: title,
     duedate: duedate,
@@ -30,20 +30,42 @@ export function createSub(pid, title, duedate, triggerdate, tag, prereq = [], sc
     },
     updateView: function(mapProj) {
       var d = new Date(duedate);
-      var trd = new Date(triggerdate);
       this.viewdata = {
         datestr: DateUtil.dateToViewString(d),
         outofdate: DateUtil.isNowAfter(d),
-        waiting: !DateUtil.isNowAfter(trd) || prereq.length > 0,
+        waiting: this.isWaiting(),
         projectname: mapProj(pid).title,
       }
+    },
+    removePrerq: function(iid) {
+      var s = new Set(this.prereq);
+      s.delete(iid);
+      this.prereq = Array.from(s);
+    },
+    addPrerq: function(iid) {
+      this.prereq.push(iid);
+    },
+    doIt: function(mapSub) {
+      this.done = true;
+      this.notify.forEach(i => {
+        mapSub(i).removePrerq(this.iid);
+      });
+      // this.notify = [];
+      // I cannot notify anyone since I would be undone.
+    },
+    unDoIt: function(mapSub) {
+      this.done = false;
+      this.notify.forEach(i => {
+        mapSub(i).addPrerq(this.iid);
+      });
     },
     isOutOfDate: function() {
       return DateUtil.isNowAfter(new Date(duedate));
     },
     isWaiting: function() {
       var trd = new Date(triggerdate);
-      return !DateUtil.isNowAfter(trd) || prereq.length > 0;
+      console.log('asking waiting(', this.iid, '):len:', this.prereq.length, "sowhat's in it:", this.prereq);
+      return !DateUtil.isNowAfter(trd) || this.prereq.length > 0;
     }
   }
 }
@@ -62,10 +84,10 @@ export function createSub(pid, title, duedate, triggerdate, tag, prereq = [], sc
  * updateView(mapSub)<br/>
  * removeSub(iid)<br/>
  */
-export function createProject(title, duedate, subs, pid = '') {
+export function createProject(title, duedate, subs) {
   console.log(subs);
   return {
-    pid: pid,
+    pid: DateUtil.genUID('pro-'),
     title: title,
     duedate: duedate,
     subs: subs,

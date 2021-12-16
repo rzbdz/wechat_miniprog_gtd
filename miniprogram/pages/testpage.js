@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    p: createProject('采矿', '2021-12-31', [], '1234'),
+    p: createProject('采矿', '2021-12-31', []),
     e1: {},
     e2: {},
     e2: {},
@@ -17,13 +17,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
-    this.data.e1 = createSub("abc", '矿工入场', '2022-12-15', '2022-12-10', '人力');
+    this.data.e1 = createSub("abc", '矿工入场', '2022-12-15', '2021-12-10', '人力');
     var i1 = this.data.e1.iid;
-    this.data.e2 = createSub("abc", '运器械', '2022-12-15', '2022-12-10', '运输', [i1]);
+    this.data.e2 = createSub("abc", '运器械', '2021-12-17', '2021-12-10', '运输', [i1]);
     var i2 = this.data.e2.iid;
     this.data.e1.addSubscriber(i2);
-    this.data.e3 = createSub("abc", '拉车', '2022-12-15', '2022-12-10', '运输', [i1]);
+    this.data.e3 = createSub("abc", '拉车', '2022-12-15', '2021-12-10', '运输', [i1]);
     var i3 = this.data.e3.iid;
     this.data.e1.addSubscriber(i3);
     var iidmap = {}
@@ -33,11 +32,13 @@ Page({
     this.data.p.subs = [i1, i2, i3];
     console.log(iidmap, iidmap[i1]);
     var submap = (iid) => { return iidmap[iid] };
-    this.data.p.setPid('abc');
+    this.data.e1.doIt(submap);
+    console.log('after doit');
     this.data.p.updateView(submap);
     var projmap = (pid) => { return this.data.p };
     this.data.e1.updateView(projmap);
     this.data.e2.updateView(projmap);
+    console.log(this.data.e2.isWaiting());
     this.data.e3.updateView(projmap);
     this.setData({
       p: this.data.p,
