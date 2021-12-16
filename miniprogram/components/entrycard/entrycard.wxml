@@ -5,14 +5,14 @@
       <view class='right-margin bold-font'>{{entry.title}}</view>
       <van-tag type="primary" class='right-margin '>{{entry.tag}}</van-tag>
       <view class='recm-type'>
-        <van-tag class='right-margin' wx:if="{{entry.waiting}}" type="warning">等待</van-tag>
-        <van-tag class='right-margin' wx:if="{{!entry.waiting}}" type="success">可做</van-tag>
+        <van-tag class='right-margin' wx:if="{{entry.viewdata.waiting}}" type="warning">等待</van-tag>
+        <van-tag class='right-margin' wx:if="{{!entry.viewdata.waiting}}" type="success">可做</van-tag>
       </view>
     </view>
     <view class='recm-project-date'>
-      <view class='right-margin'>{{entry.project}}</view>
-      <view class='right-margin'>{{entry.date}}</view>
-      <van-tag class='right-margin' wx:if="{{entry.outofdate}}" type="danger">超限</van-tag>
+      <view class='right-margin'>{{entry.viewdata.projectname}}</view>
+      <view class='right-margin'>{{entry.viewdata.datestr}}</view>
+      <van-tag class='right-margin' wx:if="{{entry.viewdata.outofdate}}" type="danger">超限</van-tag>
     </view>
   </view>
   <view class='recm-checkbox'>

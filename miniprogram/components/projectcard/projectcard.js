@@ -9,16 +9,22 @@ Component({
       value: {
         pid: "asdfh23425-test-pid-not-unique-test-only",
         title: "刚果采矿",
-        pro: 29,
-        ddl: '2021-12-13',
-        countdown: -2,
-        wait: 999,
+        progress: 29,
+        waiting: 999,
         outofdate: 999,
         cando: 999,
         done: 20,
         total: 90,
         subs: [],
-        score: 'S+'
+        viewdata: {
+          /**
+           * datestr
+           * countdown
+           */
+          datestr: '2021-12-31',
+          countdown: 0,
+          score: 'S+',
+        },
       },
     },
   },

@@ -1,0 +1,16 @@
+<!--pages/testpage.wxml-->
+<text>此页用于测试，我讨厌写 GUI 程序</text>
+<button bindtap='go'>退出测试</button>
+<button bindtap='testCloudProjectUp'>测试上传一堆 project 到云</button>
+<button bindtap='testCloudProjectDown'>从云下载 projects</button>
+<button bindtap='testCustom1'>testCustom1</button>
+<button bindtap='testCustom2'>testCustom2</button>
+<button bindtap='testCustom3'>testCustom3</button>
+<button bindtap='testCustom4'>testCustom4</button>
+<project-card project='{{p}}' />
+<entry-card entry="{{e1}}" />
+<entry-card entry="{{e2}}" />
+<entry-card entry="{{e3}}" />
+<entry-card />
+<entry-card />
+<entry-card />

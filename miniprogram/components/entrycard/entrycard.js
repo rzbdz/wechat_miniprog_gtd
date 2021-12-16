@@ -7,14 +7,19 @@ Component({
     entry: {
       type: Object,
       value: {
+        iid: 'abcdefg-test-iid-no-unique',
+        pid: 'abc-test-no-unique',
         title: 'XXXXXXXXX',
         tag: 'XX',
-        outofdate: false,
-        waiting: false,
-        project: 'XXXXX',
-        date: 'XXXX-XX-XX',
+        duedate: 'XXXX-XX-XX',
+        triggerdate: 'XXXX-XX-XX',
         done: false,
-        iid: 'abcdefg-test-iid-no-unique'
+        viewdata: {
+          datestr: 'XXXX-XX-XX',
+          outofdate: false,
+          waiting: false,
+          projectname: 'XXXXX',
+        },
       },
     },
   },

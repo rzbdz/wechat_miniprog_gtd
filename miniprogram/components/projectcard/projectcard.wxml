@@ -1,18 +1,18 @@
 <!--components/projectcard/projectcard.wxml-->
 <view class="card" bindtap="_cardclicked">
   <view class='card-row'>
-    <van-circle size="80" class="circlet" value="{{ project.pro}}" stroke-width="8" layer-color="#DDDDDD"
+    <van-circle size="80" class="circlet" value="{{ project.progress}}" stroke-width="8" layer-color="#DDDDDD"
       color="#ab0005">
-      <text class="circlet-text">{{project.score}}</text>
+      <text class="circlet-text">{{project.viewdata.score}}</text>
     </van-circle>
     <view class='card-description'>
       <text class='card-des-title'>{{project.title}}</text>
       <view class='card-kv'>
         <text class='right-margin bold-font'>期限:
         </text>
-        <text class='right-margin card-des-ddl'>{{project.ddl}}</text>
-        <van-tag class='right-margin' type='{{project.countdown <= 0 ? "danger" : "success"}}'>
-          {{project.countdown}}天
+        <text class='right-margin card-des-ddl'>{{project.viewdata.datestr}}</text>
+        <van-tag class='right-margin' type='{{project.viewdata.countdown <= 0 ? "danger" : "success"}}'>
+          {{project.viewdata.countdown}}天
         </van-tag>
       </view>
       <view>
@@ -27,8 +27,8 @@
         <van-tag wx:if="{{project.cando!=0}}" class='card-tags-van-tag' type='success'>
           {{project.cando}}可做
         </van-tag>
-        <van-tag wx:if="{{project.wait!=0}}" class='card-tags-van-tag' type='warning'>
-          {{project.wait}}等待
+        <van-tag wx:if="{{project.waiting!=0}}" class='card-tags-van-tag' type='warning'>
+          {{project.waiting}}等待
         </van-tag>
       </view>
     </view>
