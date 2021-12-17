@@ -61,6 +61,9 @@ page{
 .left-margin{
 	margin-left: var(--normal-margin);
 }
+.bottom-margin{
+  margin-bottom: var(--normal-margin);
+}
 .bottom-border{
 	border-bottom: 1px solid var(--main-gray);
 }

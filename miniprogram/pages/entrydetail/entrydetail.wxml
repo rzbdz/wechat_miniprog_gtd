@@ -7,24 +7,43 @@
   <van-notice-bar wx:if="{{entry.viewdata.waiting}}" left-icon='info-o' text='此项目需等待，请检查依赖项目或起始日！' background='#ffa5a5'
     mode='closeable' color='white' />
   <!-----INFO---MAIN VIEW START FROM HERE-->
-  <view class='meta-block-shadow bottom-margin'>
-    <view class='meta-title-block flex-row'>
+  <view class='meta-block-shadow bottom-margin' style='padding-bottom: var(--normal-margin)!important;'>
+    <view class='meta-title-block flex-row bottom-margin'>
       <textarea focus="{{_title_focus}}" class='meta-title-text' auto-height value='{{project.title}}'
         placeholder="在此输入任务名称" />
       <van-icon bindtap='edittitle' name='edit' />
     </view>
-  </view>
-  <view class='meta-block-shadow-small bottom-margin'>
-    <view class='flex-row'>
-      <view class='kvrow'>
-        <view class='bold-font right-margin'>标签:</view>
-        <van-tag type='primary'>工地活</van-tag>
-      </view>
-      <van-icon bindtap='edittag' class='large-red' name='edit' />
+    <view style='font-size:small;color:lightgray;'>美国水电站项目
     </view>
   </view>
+  <!--TAG!-->
+  <view class='flex-row meta-block-shadow-small bottom-margin'>
+    <view class='kvrow'>
+      <view class='bold-font right-margin'>标签:</view>
+      <van-tag type='primary'>工地活</van-tag>
+    </view>
+    <van-icon bindtap='edittag' class='large-red' name='edit' />
+  </view>
+  <!--TIME-->
   <view class='meta-block-shadow-small bottom-margin'>
-    <view class='flex-row' style="margin-bottom: var(--normal-margin);">
+    <view class='flex-row bottom-margin'>
+      <view class='kvrow'>
+        <view class='bold-font right-margin'>起始:</view>
+        <view>2021-12-31</view>
+      </view>
+      <van-icon bindtap='edittriggerdate' class='large-red' name='calendar-o' />
+    </view>
+    <view class='flex-row'>
+      <view class='kvrow'>
+        <view class='bold-font right-margin'>期限:</view>
+        <view>2021-12-31</view>
+      </view>
+      <van-icon bindtap='editduedate' class='large-red' name='calendar-o' />
+    </view>
+  </view>
+  <!--PREREQUISTE-->
+  <view class='meta-block-shadow-small bottom-margin'>
+    <view class='flex-row bottom-margin'>
       <view class='bold-font'>依赖项目</view>
       <van-icon color='var(--main-red)' class='large-red' name='plus' />
     </view>
@@ -36,6 +55,7 @@
   <van-calendar style="z-index:999;" bind:confirm='confirmcalendar' bind:close='closecalendar' show='{{_show_calendar}}'
     color="var(--main-red)" />
 </view>
+<van-icon bindtap="addclicked" class="addbutton" size='16px' color="white" name="success" style='bottom:3rem' />
 
 <!--
 	    <view class='flex-row' bindtap='showcalendar'>
