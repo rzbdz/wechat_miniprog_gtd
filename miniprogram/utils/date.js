@@ -9,9 +9,10 @@ export function genUID(prefix = '') {
     return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
   });
 }
+const DAY_MOD = (24 * 60 * 60 * 1000);
 
-export function isNowAfter(date) {
-  return new Date(date) <= new Date();
+export function getDayStamp(d) {
+  return Math.floor(d.getTime() / DAY_MOD);
 }
 
 /**
@@ -22,6 +23,12 @@ export function isNowAfter(date) {
 export function getToday() {
   return new Date();
 }
+
+export function isNowAfter(date) {
+  return getDayStamp(new Date(date)) < getDayStamp(getToday());
+}
+
+
 Date.prototype.format = function(fmt) {
   var o = {
     "M+": this.getMonth() + 1, //月份 
@@ -42,17 +49,11 @@ Date.prototype.format = function(fmt) {
   }
   return fmt;
 }
-const DAY_MOD = (24 * 60 * 60 * 1000);
 
-export function getDayStamp(d) {
-  return Math.floor(d.getTime() / DAY_MOD);
-}
-
-export function isSameDay(d1, d2) {
-  var stamp1 = getDayStamp(d1);
-  var stamp2 = getDayStamp(d2);
-  console.log(stamp1, stamp2);
-  return stamp1 == stamp2;
+export function isSameDay(first, second) {
+  return first.getFullYear() === second.getFullYear() &&
+    first.getMonth() === second.getMonth() &&
+    first.getDate() === second.getDate();
 }
 /**
  * return a Number.
