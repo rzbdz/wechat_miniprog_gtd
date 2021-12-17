@@ -23,7 +23,7 @@
       <view class='row-location'>西安电子科技大学(南校区)图书馆</view>
       <view class='row-location'>西安电子科技大学(南校区)竹园1号</view>
     </view>
-    <van-icon color='#ab0005' name='clear' size='28px' style="margin-top: 5px;" />
+    <van-icon color='#ab0005' name='minus' size='28px' style="margin-top: 5px;" />
   </view>
   <view class='tagcard'>
     <view class='card-left'>
@@ -39,7 +39,7 @@
       <view class='row-location'>西安电子科技大学(南校区)图书馆</view>
       <view class='row-location'>西安电子科技大学(南校区)竹园1号</view>
     </view>
-    <van-icon color='#ab0005' name='clear' size='28px' style="margin-top: 5px;" />
+    <van-icon color='#ab0005' name='minus' size='28px' style="margin-top: 5px;" />
   </view>
   <view class='tagcard'>
     <view class='card-left'>
@@ -55,7 +55,7 @@
       <view class='row-location'>西安电子科技大学(南校区)图书馆</view>
       <view class='row-location'>西安电子科技大学(南校区)竹园1号</view>
     </view>
-    <van-icon color='#ab0005' name='clear' size='28px' style="margin-top: 5px;" />
+    <van-icon color='#ab0005' name='minus' size='28px' style="margin-top: 5px;" />
   </view>
   <view class='tagcard'>
     <view class='card-left'>
@@ -71,7 +71,7 @@
       <view class='row-location'>西安电子科技大学(南校区)图书馆</view>
       <view class='row-location'>西安电子科技大学(南校区)竹园1号</view>
     </view>
-    <van-icon color='#ab0005' name='clear' size='28px' style="margin-top: 5px;" />
+    <van-icon color='#ab0005' name='minus' size='28px' style="margin-top: 5px;" />
   </view>
   <view style="height: 40px;" />
 </scroll-view>

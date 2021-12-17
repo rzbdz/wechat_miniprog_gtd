@@ -13,7 +13,7 @@
         placeholder="在此输入任务名称" />
       <van-icon bindtap='edittitle' name='edit' />
     </view>
-    <view style='font-size:small;color:lightgray;'>美国水电站项目
+    <view style='font-size:small;color:lightgray;'>来自: 美国水电站项目
     </view>
   </view>
   <!--TAG!-->
