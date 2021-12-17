@@ -41,8 +41,8 @@
 ![now](./.res/now.png)
 ![ddl](./.res/ddl.png)
 ![setting](./.res/setting.png)
-![d1](./res/detail1.png)
-![d2](./res/detail2.png)
+![d1](./.res/detail1.png)
+![d2](./.res/detail2.png)
 ---
 # 库表设计（已大改）
 
