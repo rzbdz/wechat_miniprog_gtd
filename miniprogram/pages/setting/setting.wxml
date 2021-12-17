@@ -9,7 +9,7 @@
     </text>
   </view>
   <van-divider custom-style="margin: 0px 16px 0px 16px" />
-  <view class='tagcard'>
+  <view bindtap='fucktest' class='tagcard'>
     <view class='card-left'>
       <view class='name-time-row'>
         <view class='tag-name right-margin'>吃饭</view>

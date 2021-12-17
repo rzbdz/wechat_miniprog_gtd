@@ -3,10 +3,13 @@ App({
     this.initcloud()
 
     this.globalData = {
-      // 用于存储待办记录的集合名称
-      cachedopenid: "",
+      user_info: {
+        id: "",
+        desc: "",
+        reg_date: "",
+      }
     }
-    
+
     // console.log((await (await this.cloud()).callFunction({
     //   name: 'register'
     // })).result);

@@ -13,13 +13,82 @@ page{
   --card-margin: 24px;
   --card-padding: 12px;
   --header-margin: 16px;
+  --normal-padding: 10px;
 }
 .header-font{
 	font-size:large;
 	color: var(--main-red);
 	font-weight: bolder;
 }
-
+.meta-block-shadow{
+	padding: var(--card-margin);
+	max-width: 100vw;
+	border-bottom: 1px solid var(--main-gray);
+	box-shadow: 0px 0px 2px 1px var(--main-gray);
+}
+.meta-block-shadow-small{
+  padding-top: var(--normal-margin) ;
+  padding-left: var(--card-margin); 
+  padding-bottom: var(--normal-margin) ;
+  padding-right: var(--card-margin); 
+	max-width: 100vw;
+	border-bottom: 1px solid var(--main-gray);
+	box-shadow: 0px 0px 2px 1px var(--main-gray);
+}
+.kvrow{
+	display: flex;
+	flex-direction: row;
+}
+.bold-font{
+	font-weight: bold;
+}
+.item{
+  display: flex;
+  align-items: center;
+}
+.item::before{
+  content: '';
+  position: relative;
+  left: 0;
+  top:1px;
+  margin-right: 5px;
+  background-color: var(--main-red);
+  display: inline-block; 
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+.left-margin{
+	margin-left: var(--normal-margin);
+}
+.bottom-border{
+	border-bottom: 1px solid var(--main-gray);
+}
+.top-border{
+  border-top: 1px solid var(--main-gray);
+}
+.flex-row{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+.large-red{
+	font-size: 16pt;
+	color: var(--main-red);
+}
+.meta-title-block{
+	font-size: 16pt;
+	max-height: 40pt;
+	color: var(--main-red);
+}
+.bottom-margin{
+  margin-bottom: var(--normal-margin);
+}
+.meta-title-text{
+	line-height: 16pt;
+	font-weight: bolder;
+}
 checkbox {
 	width: 50rpx;
 	height: 50rpx;
@@ -55,7 +124,7 @@ switch .wx-checkbox-input{
 }
 switch .wx-checkbox-input.wx-checkbox-input-checked{
   background: #ab0005;
-  border-style: hidden;
+  border-color: white;
 }
 switch .wx-checkbox-input.wx-checkbox-input-checked::before {
   width: 40rpx;
@@ -77,7 +146,16 @@ switch .wx-checkbox-input.wx-checkbox-input-checked::before {
   height: calc(100vh - 50px);
   width: 100vw;
 }
-
+.addbutton{
+  height: 12vw;
+  width: 12vw;
+  background-color: #aa0005;
+  position:fixed;
+  border-radius: 50%;
+  box-shadow: 2px 3px 4px 1px lightgray;
+  right: 6vw;
+  z-index: 9;
+}
 .van-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;

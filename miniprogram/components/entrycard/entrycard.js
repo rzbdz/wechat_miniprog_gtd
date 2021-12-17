@@ -34,11 +34,11 @@ Component({
    */
   methods: {
     _entryclicked() {
-      console.log('in compo entry', this.data.entry.iid);
+      // console.log('in compo entry', this.data.entry.iid);
       this.triggerEvent("click", this.data.entry.iid);
     },
     _checkboxchange(e) {
-      console.log('in compo entry', e);
+      // console.log('in compo entry', e);
       this.triggerEvent("check", { iid: this.data.entry.iid, check: e.detail.value });
     },
   }

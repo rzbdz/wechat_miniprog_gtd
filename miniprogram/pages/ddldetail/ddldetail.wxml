@@ -1,3 +1,92 @@
 <!--pages/ddldetail/ddldetail.wxml-->
-<text>pages/ddldetail/ddldetail.wxml</text>
-<project-card bindclick='clk'/>
+<button bindtap='go'>Go</button>
+<view style="max-height: 100vh;width: 100vw; overflow: hidden;">
+  <!--WARNING MESSAGE-->
+  <van-notice-bar wx:if='{{project.viewdata.countdown < 0}}' left-icon='info-o' text='此项目已逾期，请调整或修改截至日期！'
+    background='var(--main-red)' mode='closeable' color='white' />
+  <van-notice-bar wx:if="{{project.viewdata.score[0] == 'F'}}" left-icon='info-o' text='此项目进展不佳，请检查逾期事件进度！'
+    background='var(--main-red)' mode='closeable' color='white' />
+  <!-----INFO---MAIN VIEW START FROM HERE-->
+  <view class='meta-block-shadow'>
+    <view class='meta-title-block flex-row'>
+      <textarea focus="{{_title_focus}}" class='meta-title-text' auto-height value='{{project.title}}'
+        placeholder="在此输入项目名称" />
+      <van-icon bindtap='edittitle' name='edit' />
+    </view>
+    <view class='flex-row' bindtap='showcalendar'>
+      <view class='kvrow'>
+        <view class='bold-font'>期限:</view>
+        <view class='left-margin right-margin'>{{project.viewdata.datestr}}</view>
+        <van-tag wx:if="{{project.done!=project.total}}" class='right-margin'
+          type='{{project.viewdata.countdown <= 0 ? "danger" : "success"}}'>
+          {{project.viewdata.countdown}}天
+        </van-tag>
+        <van-tag wx:else class='right-margin' type='success'>
+          已完成!
+        </van-tag>
+      </view>
+      <van-icon class='large-red' name='calendar-o' />
+    </view>
+    <view class='kvrow'>
+      <view class='bold-font'>进度：</view>
+      <view>第 {{project.done}} 步，共 {{project.total}} 步</view>
+    </view>
+    <view class='kvrow'>
+      <view class='bold-font'>评分：</view>
+      <view class='left-margin right-margin'>{{project.viewdata.score}}</view>
+    </view>
+  </view>
+  <van-calendar style="z-index:999;" bind:confirm='confirmcalendar' bind:close='closecalendar' show='{{_show_calendar}}'
+    color="var(--main-red)" />
+  <!--ENTRY CARDS-->
+  <scroll-view style='margin-top: 5px;height: calc(100vh - 100px);width: 100vw;' scroll-y='true'>
+    <view style="height: var(--normal-margin);" />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <entry-card />
+    <view style="height:100px;" />
+  </scroll-view>
+  <van-icon bindtap="addclicked" class="addbutton" size='16px' color="white" name="plus" style='bottom:3rem' />
+</view>

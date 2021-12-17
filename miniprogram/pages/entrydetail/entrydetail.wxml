@@ -1,3 +1,63 @@
 <!--pages/entrydetail/entrydetail.wxml-->
-<text>pages/entrydetail/entrydetail.wxml</text>
-<entry-card bindcheck='check' bindclick='click' entry='{{myen}}' />
+<button bindtap='go'>Let me go!</button>
+<view style="height: 100vh;width: 100vw; overflow: hidden;">
+  <!--WARNING MESSAGE-->
+  <van-notice-bar wx:if='{{entry.viewdata.outofdate}}' left-icon='info-o' text='此任务已逾期，请调整或修改截至日期！'
+    background='var(--main-red)' mode='closeable' color='white' />
+  <van-notice-bar wx:if="{{entry.viewdata.waiting}}" left-icon='info-o' text='此项目需等待，请检查依赖项目或起始日！' background='#ffa5a5'
+    mode='closeable' color='white' />
+  <!-----INFO---MAIN VIEW START FROM HERE-->
+  <view class='meta-block-shadow bottom-margin'>
+    <view class='meta-title-block flex-row'>
+      <textarea focus="{{_title_focus}}" class='meta-title-text' auto-height value='{{project.title}}'
+        placeholder="在此输入任务名称" />
+      <van-icon bindtap='edittitle' name='edit' />
+    </view>
+  </view>
+  <view class='meta-block-shadow-small bottom-margin'>
+    <view class='flex-row'>
+      <view class='kvrow'>
+        <view class='bold-font right-margin'>标签:</view>
+        <van-tag type='primary'>工地活</van-tag>
+      </view>
+      <van-icon bindtap='edittag' class='large-red' name='edit' />
+    </view>
+  </view>
+  <view class='meta-block-shadow-small bottom-margin'>
+    <view class='flex-row' style="margin-bottom: var(--normal-margin);">
+      <view class='bold-font'>依赖项目</view>
+      <van-icon color='var(--main-red)' class='large-red' name='plus' />
+    </view>
+    <view class='flex-row top-border'>
+      <view class='item'>项目 A</view>
+      <van-icon color='var(--main-red)' class='large-red' name='minus' />
+    </view>
+  </view>
+  <van-calendar style="z-index:999;" bind:confirm='confirmcalendar' bind:close='closecalendar' show='{{_show_calendar}}'
+    color="var(--main-red)" />
+</view>
+
+<!--
+	    <view class='flex-row' bindtap='showcalendar'>
+      <view class='kvrow'>
+        <view class='bold-font'>期限:</view>
+        <view class='left-margin right-margin'>{{project.viewdata.datestr}}</view>
+        <van-tag wx:if="{{project.done!=project.total}}" class='right-margin'
+          type='{{project.viewdata.countdown <= 0 ? "danger" : "success"}}'>
+          {{project.viewdata.countdown}}天
+        </van-tag>
+        <van-tag wx:else class='right-margin' type='success'>
+          已完成!
+        </van-tag>
+      </view>
+      <van-icon class='large-red' name='calendar-o' />
+    </view>
+    <view class='kvrow'>
+      <view class='bold-font'>进度：</view>
+      <view>第 {{project.done}} 步，共 {{project.total}} 步</view>
+    </view>
+    <view class='kvrow'>
+      <view class='bold-font'>评分：</view>
+      <view class='left-margin right-margin'>{{project.viewdata.score}}</view>
+    </view>
+-->

@@ -54,17 +54,7 @@
     margin-left: 0px;
     margin-right: 4px;
 }
-.addbutton{
-    height: 12vw;
-    width: 12vw;
-    background-color: #aa0005;
-    position:fixed;
-    border-radius: 50%;
-    box-shadow: 1px 2px 3px 2px #DDDDDD;
-    bottom: 6rem;
-    right: 6vw;
-    z-index: 9999;
-  }
+
 .circlet {
     color: white;
 }

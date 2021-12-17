@@ -4,5 +4,5 @@
     <project-card wx:for="{{ddllist}}" project="{{item}}" wx:key="pid" bindclick="cardclicked" />
     <view style="min-height: 20vh" />
   </scroll-view>
-  <van-icon bindtap="toaddpage" class="addbutton" size='16px' color="white" name="plus" />
+  <van-icon bindtap="toaddpage" class="addbutton" size='16px' color="white" name="plus" style="bottom: 6rem;" />
 </view>

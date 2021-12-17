@@ -6,7 +6,7 @@
       <van-tag type="primary" class='right-margin '>{{entry.tag}}</van-tag>
       <view class='recm-type'>
         <van-tag class='right-margin' wx:if="{{entry.viewdata.waiting}}" type="warning">等待</van-tag>
-        <van-tag class='right-margin' wx:if="{{!entry.viewdata.waiting}}" type="success">可做</van-tag>
+        <van-tag class='right-margin' wx:if="{{!entry.viewdata.waiting && !entry.done}}" type="success">可做</van-tag>
       </view>
     </view>
     <view class='recm-project-date'>

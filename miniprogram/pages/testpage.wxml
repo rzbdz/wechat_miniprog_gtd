@@ -8,7 +8,7 @@
 <button bindtap='testCustom3'>testCustom3</button>
 <button bindtap='testCustom4'>testCustom4</button>
 <project-card project='{{p}}' />
-<entry-card entry="{{e1}}" />
+<entry-card entry="{{e1}}" bindclick='e1clicked' bindcheck='e1checked'/>
 <entry-card entry="{{e2}}" />
 <entry-card entry="{{e3}}" />
 <entry-card />

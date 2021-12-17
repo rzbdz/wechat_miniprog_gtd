@@ -5,35 +5,65 @@ Page({
    * 页面的初始数据
    */
   data: {
-    myen: {
-      title: 'Passed IN',
+    entry: {
+      iid: 'abcdefg-test-iid-no-unique',
+      pid: 'abc-test-no-unique',
+      title: 'XXXXXXXXX',
       tag: 'XX',
-      outofdate: false,
-      waiting: false,
-      project: 'XXXXX',
-      date: 'XXXX-XX-XX',
-      iid: 'abcdefg-test-iid-no-unique'
-    }
+      duedate: 'XXXX-XX-XX',
+      triggerdate: 'XXXX-XX-XX',
+      done: false,
+      viewdata: {
+        datestr: 'XXXX-XX-XX',
+        outofdate: true,
+        waiting: true,
+        projectname: 'XXXXX',
+      },
+    },
   },
-
+  go: function(e) {
+    wx.switchTab({
+      url: '/pages/now/now',
+    })
+  },
   check: function(e) {
     console.log(e);
-    this.data.myen.waiting = !this.data.myen.waiting;
-    this.data.myen.date = 'asdfkdhas;kf?'
+    this.data.entry.done = !this.data.entry.done;
     this.setData({
-      myen: this.data.myen,
+      entry: this.data.entry,
     })
   },
 
   click: function(e) {
     console.log(e);
-    this.data.myen.outofdate = !this.data.myen.outofdate;
-    this.data.myen.date = 'XXXXX?'
+    this.data.entry.viewdata.outofdate = !this.data.entry.viewdata.outofdate;
+    this.data.entry.viewdata.datestr = 'XXXXX?'
     this.setData({
-      myen: this.data.myen,
+      entry: this.data.entry,
     })
   },
-
+  edittitle: function(e) {
+    this.setData({
+      _title_focus: !this.data._title_focus,
+    })
+  },
+  showcalendar: function(e) {
+    this.setData({
+      _show_calendar: true,
+    })
+  },
+  closecalendar: function(e) {
+    this.setData({
+      _show_calendar: false,
+    })
+  },
+  confirmcalendar: function(e) {
+    this.setData({
+      _show_calendar: false,
+      calendar_date: new Date(e.detail),
+    });
+    console.log(this.data.calendar_date);
+  },
 
   /**
    * 生命周期函数--监听页面加载

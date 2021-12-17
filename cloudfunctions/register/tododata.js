@@ -1,83 +1,74 @@
 const { DateUtil } = require("./date");
 
 exports.TodoData = {
-  Sub: function() {
-    this.iid = ''
-    this.pid = ''
-    this.title = ''
-    this.duedate = ''
-    this.triggerdate = ''
-    this.prereq = ''
-    this.notify = []
-    this.tag = ''
-    this.scene = ''
-    this.done = false
-    this.addSubscriber = function(hisiid) {
-      this.notify.push(hisiid);
-    }
-    this.removeSubscriber = function(hisiid) {
-      var s = new Set(this.notify);
-      s.delete(hisiid);
-      this.notify = Array.from(s);
-    }
-    this.viewdata = {
-      /**
-       * datestr
-       * outofdate
-       * waiting
-       * projectname
-       */
-    }
-    this.updateView = function(mapProj) {
-      var d = new Date(this.duedate);
-      this.viewdata = {
-        datestr: DateUtil.dateToViewString(d),
-        outofdate: DateUtil.isNowAfter(d),
-        waiting: this.isWaiting(),
-        projectname: mapProj(this.pid).title,
+  createSub: function(pid, title, duedate, triggerdate, tag, prereq = [], scene = "") {
+    return {
+      iid: DateUtil.genUID('sub-'),
+      pid: pid,
+      title: title,
+      duedate: duedate,
+      triggerdate: triggerdate,
+      prereq: prereq,
+      notify: [],
+      tag: tag,
+      scene: scene,
+      done: false,
+      addSubscriber: function(hisiid) {
+        this.notify.push(hisiid);
+      },
+      removeSubscriber: function(hisiid) {
+        var s = new Set(notify);
+        s.delete(hisiid);
+        this.notify = Array.from(s);
+      },
+      viewdata: {
+        /**
+         * datestr
+         * outofdate
+         * waiting,
+         * projectname,
+         */
+      },
+      updateView: function(mapProj) {
+        var d = new Date(duedate);
+        this.viewdata = {
+          datestr: DateUtil.dateToViewString(d),
+          outofdate: DateUtil.isNowAfter(d),
+          waiting: this.isWaiting(),
+          projectname: mapProj(pid).title,
+        }
+      },
+      removePrerq: function(iid) {
+        var s = new Set(this.prereq);
+        s.delete(iid);
+        this.prereq = Array.from(s);
+      },
+      addPrerq: function(iid) {
+        this.prereq.push(iid);
+      },
+      doIt: function(mapSub) {
+        this.done = true;
+        this.notify.forEach(i => {
+          mapSub(i).removePrerq(this.iid);
+        });
+        // this.notify = [];
+        // I cannot notify anyone since I would be undone.
+      },
+      unDoIt: function(mapSub) {
+        this.done = false;
+        this.notify.forEach(i => {
+          mapSub(i).addPrerq(this.iid);
+        });
+      },
+      isOutOfDate: function() {
+        return DateUtil.isNowAfter(new Date(duedate));
+      },
+      isWaiting: function() {
+        var trd = new Date(triggerdate);
+        console.log('asking waiting(', this.iid, '):len:', this.prereq.length, "sowhat's in it:", this.prereq);
+        return !DateUtil.isNowAfter(trd) || this.prereq.length > 0;
       }
     }
-    this.removePrerq = function(iid) {
-      var s = new Set(this.prereq);
-      s.delete(iid);
-      this.prereq = Array.from(s);
-    }
-    this.addPrerq = function(iid) {
-      this.prereq.push(iid);
-    }
-    this.doIt = function(mapSub) {
-      this.done = true;
-      this.notify.forEach(i => {
-        mapSub(i).removePrerq(this.iid);
-      });
-      // this.notify = [];
-      // I cannot notify anyone since I would be undone.
-    }
-    this.unDoIt = function(mapSub) {
-      this.done = false;
-      this.notify.forEach(i => {
-        mapSub(i).addPrerq(this.iid);
-      });
-    }
-    this.isOutOfDate = function() {
-      return DateUtil.isNowAfter(new Date(this.duedate));
-    }
-    this.isWaiting = function() {
-      var trd = new Date(this.triggerdate);
-      return !DateUtil.isNowAfter(trd) || this.prereq.length > 0;
-    }
-  },
-  createSub: function(pid, title, duedate, triggerdate, tag, prereq = [], scene = "") {
-    var r = new this.Sub();
-    r.pid = pid;
-    r.title = title;
-    r.duedate = duedate;
-    r.triggerdate = triggerdate;
-    r.tag = tag;
-    r.prereq = prereq;
-    r.scene = scene;
-    r.iid = DateUtil.genUID('sub');
-    return r;
   },
 
   Project: function() {
@@ -177,7 +168,7 @@ exports.TodoData = {
    * updateView(mapSub)<br/>
    * removeSub(iid)<br/>
    */
-  createProject: function(title, duedate, subs = []) {
+  createProject: function(title, duedate, subs) {
     console.log(subs);
     var p = new this.Project();
     p.pid = DateUtil.genUID('pro');

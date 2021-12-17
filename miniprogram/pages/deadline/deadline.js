@@ -28,47 +28,25 @@ Page({
    */
   data: {
     ddllist: [{
-        pid: "asdfh23425",
-        title: "刚果采矿",
-        pro: 29,
-        ddl: '2021-12-13',
-        countdown: -2,
-        wait: 999,
-        outofdate: 999,
-        cando: 0,
-        done: 20,
-        total: 90,
-        subs: [],
-        score: 'S+'
+      pid: "asdfh23425-test-pid-not-unique-test-only",
+      title: "刚果采矿",
+      progress: 29,
+      waiting: 999,
+      outofdate: 999,
+      cando: 999,
+      done: 20,
+      total: 90,
+      subs: [],
+      viewdata: {
+        /**
+         * datestr
+         * countdown
+         */
+        datestr: '2021-12-31',
+        countdown: 0,
+        score: 'S+',
       },
-      {
-        pid: "asdfddh23425",
-        title: "刚果采矿",
-        pro: 29,
-        ddl: '2021-12-13',
-        countdown: -2,
-        wait: 999,
-        outofdate: 999,
-        cando: 999,
-        done: 20,
-        total: 90,
-        subs: [],
-        score: 'S+'
-      }, {
-        pid: "asdfhd23425",
-        title: "刚果采矿",
-        pro: 29,
-        ddl: '2021-12-13',
-        countdown: -2,
-        wait: 999,
-        outofdate: 0,
-        cando: 999,
-        done: 0,
-        total: 90,
-        subs: [],
-        score: 'S+'
-      },
-    ]
+    }, ]
   },
   /**
    * 生命周期函数--监听页面加载
@@ -79,26 +57,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-    this.data.ddllist.push(this
-      .ddlcreator('asafdfa',
-        '非洲水电', 90,
-        "2022-09-22", 2, 20, 0,
-        10, 10, 100, [], 'A-'));
-    this.data.ddllist.push(this
-      .ddlcreator('asddddfa',
-        '美国大坝', 90,
-        "2022-09-22", 2, 0, 10,
-        10, 10, 100, [], 'A-'));
-    this.data.ddllist.push(this
-      .ddlcreator('asaf1dfa',
-        "洲际导弹订单", 45,
-        "2022-09-22", 22, 3, 10,
-        10, 1, 22, [], 'A-'));
-    this.data.ddllist.push(this
-      .ddlcreator('asdadfa',
-        '非洲水电', 90,
-        "2022-09-22", 360, 20, 10,
-        10, 10, 100, [], 'A-'));
     this.setData({
       ddllist: this.data
         .ddllist

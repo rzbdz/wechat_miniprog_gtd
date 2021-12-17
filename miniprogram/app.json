@@ -1,17 +1,18 @@
 {
   "pages": [
-    "pages/setting/setting",
+    "pages/entrydetail/entrydetail",
+    "pages/ddldetail/ddldetail",
+    "pages/testpage",
     "pages/now/now",
+    "pages/setting/setting",
     "pages/deadline/deadline",
     "pages/community/community",
-    "pages/ddldetail/ddldetail",
-    "custom-tab-bar/index",
-    "pages/entrydetail/entrydetail"
+    "custom-tab-bar/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ab0005",
-    "navigationBarTitleText": "包做 - Bao Todo",
+    "navigationBarTitleText": "Bao Todo",
     "navigationBarTextStyle": "white"
   },
   "tabBar": {
@@ -39,6 +40,9 @@
   },
   "sitemapLocation": "sitemap.json",
   "usingComponents": {
+    "van-calendar": "@vant/weapp/calendar/index",
+    "van-datetime-picker": "@vant/weapp/datetime-picker/index",
+    "van-notice-bar": "@vant/weapp/notice-bar/index",
     "van-cell": "@vant/weapp/cell/index",
     "van-divider": "@vant/weapp/divider/index",
     "van-cell-group": "@vant/weapp/cell-group/index",
@@ -49,7 +53,6 @@
     "van-button": "@vant/weapp/button/index",
     "van-row": "@vant/weapp/row/index",
     "van-col": "@vant/weapp/col/index",
-    "van-datetime-picker": "@vant/weapp/datetime-picker/index",
     "van-field": "@vant/weapp/field/index",
     "van-rate": "@vant/weapp/rate/index",
     "van-loading": "@vant/weapp/loading/index",

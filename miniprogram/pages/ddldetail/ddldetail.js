@@ -1,19 +1,30 @@
 // pages/ddldetail/ddldetail.js
+const { TodoData } = require('../../utils/tododata')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    _title_focus: false,
+    _show_calendar: false,
+    calendar_date: {},
+    project: TodoData.createProject("", '2021-12-31'),
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(option) {
+    this.data.project.updateView((a) => null);
+    this.setData({
+      project: this.data.project,
+    })
+    console.log('after update: ', this.data.project);
     console.log(option.query)
     const eventChannel = this.getOpenerEventChannel()
+    console.log(eventChannel);
+    if (!eventChannel.length) return;
     eventChannel.emit('acceptDataFromOpenedPage', { data: 'testsaaa' });
     eventChannel.emit('someEvent', { data: 'testbdfd' });
     // 监听acceptDataFromOpenerPage事件，获取上一页面通过eventChannel传送到当前页面的数据
@@ -21,6 +32,7 @@ Page({
       console.log('in new', data)
     })
   },
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -110,5 +122,32 @@ Page({
       })
     });
     console.log();
+  },
+  go: function(e) {
+    wx.switchTab({
+      url: '/pages/now/now',
+    })
+  },
+  edittitle: function(e) {
+    this.setData({
+      _title_focus: !this.data._title_focus,
+    })
+  },
+  showcalendar: function(e) {
+    this.setData({
+      _show_calendar: true,
+    })
+  },
+  closecalendar: function(e) {
+    this.setData({
+      _show_calendar: false,
+    })
+  },
+  confirmcalendar: function(e) {
+    this.setData({
+      _show_calendar: false,
+      calendar_date: new Date(e.detail),
+    });
+    console.log(this.data.calendar_date);
   }
 })

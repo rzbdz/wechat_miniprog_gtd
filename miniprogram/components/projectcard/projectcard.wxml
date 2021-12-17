@@ -11,14 +11,16 @@
         <text class='right-margin bold-font'>期限:
         </text>
         <text class='right-margin card-des-ddl'>{{project.viewdata.datestr}}</text>
-        <van-tag class='right-margin' type='{{project.viewdata.countdown <= 0 ? "danger" : "success"}}'>
+        <van-tag wx:if="{{project.done!=project.total}}" class='right-margin'
+          type='{{project.viewdata.countdown <= 0 ? "danger" : "success"}}'>
           {{project.viewdata.countdown}}天
         </van-tag>
+        <van-tag wx:else class='right-margin' type='success'>
+          已完成!
+        </van-tag>
       </view>
-      <view>
-        <view style="font-size: small;">
-          第 {{project.done}} 步, 共 {{project.total}} 步
-        </view>
+      <view style="font-size: small;">
+        第 {{project.done}} 步, 共 {{project.total}} 步
       </view>
       <view class='card-tags'>
         <van-tag wx:if="{{project.outofdate!=0}}" class='card-tags-van-tag' type='danger'>
