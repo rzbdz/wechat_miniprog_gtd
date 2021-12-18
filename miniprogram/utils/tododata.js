@@ -8,34 +8,18 @@ exports.TodoData = {
     this.duedate = ''
     this.triggerdate = ''
     this.prereq = ''
-    this.notify = []
+    this.notify = {}
     this.tag = ''
     this.scene = ''
     this.done = false
     this.addSubscriber = function(hisiid) {
-      this.notify.push(hisiid);
+      this.notify['hisiid'] = false;
     }
     this.removeSubscriber = function(hisiid) {
-      var s = new Set(this.notify);
-      s.delete(hisiid);
-      this.notify = Array.from(s);
+      delete notify['hisiid'];
     }
-    this.viewdata = {
-      /**
-       * datestr
-       * outofdate
-       * waiting
-       * projectname
-       */
-    }
-    this.updateView = function(mapProj) {
-      var d = new Date(this.duedate);
-      this.viewdata = {
-        datestr: DateUtil.dateToViewString(d),
-        outofdate: DateUtil.isNowAfter(d),
-        waiting: this.isWaiting(),
-        projectname: mapProj(this.pid).title,
-      }
+    this.doNotify = function(preiid, doornot = true) {
+      notify['preiid'] = doornot;
     }
     this.removePrerq = function(iid) {
       var s = new Set(this.prereq);
@@ -45,26 +29,59 @@ exports.TodoData = {
     this.addPrerq = function(iid) {
       this.prereq.push(iid);
     }
+    this.hasPreNotFinish = function() {
+      var res = true;
+      for (var key in dic) {
+        res &= dic[key];
+      }
+    }
+    this.viewdata = {
+      /**
+       * datestr
+       * outofdate
+       * waiting
+       * projectname
+       */
+    }
+    this.isOutOfDate = function() {
+      return DateUtil.isNowAfter(new Date(this.duedate));
+    }
+    /**
+     * call this function to update waiting
+     * everytime in application update
+     */
+    this.isWaiting = function() {
+      var trd = new Date(this.triggerdate);
+      return this.viewdata.waiting = !DateUtil.isNowAfter(trd) || this.hasPreNotFinish();
+    }
+    this.updateViewLight = this.isWaiting;
+    /**
+     * Call this function to init a project,
+     * onReload, onShow
+     * @param {(String)=>Project} mapProj 
+     */
+    this.updateView = function(mapProj) {
+      var d = new Date(this.duedate);
+      this.viewdata = {
+        datestr: DateUtil.dateToViewString(d),
+        outofdate: DateUtil.isNowAfter(d),
+        waiting: this.isWaiting(),
+        projectname: mapProj(this.pid).title,
+      }
+    }
     this.doIt = function(mapSub) {
       this.done = true;
       this.notify.forEach(i => {
-        mapSub(i).removePrerq(this.iid);
+        mapSub(i).doNotify(this.iid);
       });
       // this.notify = [];
-      // I cannot notify anyone since I would be undone.
+      // I cannot remove anyone since I would be undone.
     }
     this.unDoIt = function(mapSub) {
       this.done = false;
       this.notify.forEach(i => {
         mapSub(i).addPrerq(this.iid);
       });
-    }
-    this.isOutOfDate = function() {
-      return DateUtil.isNowAfter(new Date(this.duedate));
-    }
-    this.isWaiting = function() {
-      var trd = new Date(this.triggerdate);
-      return !DateUtil.isNowAfter(trd) || this.prereq.length > 0;
     }
   },
   createSub: function(pid, title, duedate, triggerdate, tag, prereq = [], scene = "") {
@@ -129,6 +146,9 @@ exports.TodoData = {
       score: 'S+',
     };
 
+    // TODO: use better reviewing method
+    // an alternative is to use quantitative scoring,
+    // then convert to grade score in the view.
     this._score_algorithm = function(done, ood, total, expired) {
       if (expired) return 'F-';
       if (ood > total / 2) return 'F';
