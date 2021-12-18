@@ -16,6 +16,6 @@
     </view>
   </view>
   <view class='recm-checkbox'>
-    <switch checked="{{entry.done}}" bindchange="_checkboxchange" type="checkbox" />
+    <switch checked="{{entry.done}}" disabled="{{entry.viewdata.waiting}}" bindchange="_checkboxchange" type="checkbox" />
   </view>
 </view>

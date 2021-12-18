@@ -9,8 +9,12 @@
   <!-----INFO---MAIN VIEW START FROM HERE-->
   <view class='meta-block-shadow bottom-margin' style='padding-bottom: var(--normal-margin)!important;'>
     <view class='meta-title-block flex-row bottom-margin'>
-      <textarea focus="{{_title_focus}}" class='meta-title-text' auto-height value='{{project.title}}'
-        placeholder="在此输入任务名称" />
+      <view class='kvrow'>
+        <switch class="right-margin" disabled="{{entry.viewdata.waiting}}" checked="{{entry.done}}"
+          bindchange="checkboxchange" type="checkbox" />
+        <textarea focus="{{_title_focus}}" class='meta-title-text' auto-height value='{{project.title}}'
+          placeholder="在此输入任务名称" />
+      </view>
       <van-icon bindtap='edittitle' name='edit' />
     </view>
     <view style='font-size:small;color:lightgray;'>来自: 美国水电站项目

@@ -37,7 +37,8 @@ page{
 }
 .kvrow{
 	display: flex;
-	flex-direction: row;
+  flex-direction: row;
+  align-items: center;
 }
 .bold-font{
 	font-weight: bold;
