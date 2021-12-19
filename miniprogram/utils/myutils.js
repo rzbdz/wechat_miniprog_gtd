@@ -58,6 +58,10 @@ exports.DateUtil = {
   getToday: function() {
     return new Date();
   },
+  getNowHour: function() {
+    var t = exports.DateUtil.getToday();
+    return t.getHours();
+  },
 
   isNowAfter: function(date) {
     return this.getDayStamp(new Date(date)) < this.getDayStamp(this.getToday());
@@ -71,10 +75,13 @@ exports.DateUtil = {
   /**
    * return a Number.
    */
-  expireDays: function(d) {
-    var stamp = this.getDayStamp(d);
-    var stampNow = this.getDayStamp(this.getToday());
-    return Math.floor(stamp - stampNow);
+  expireDays: function(b) {
+    var a = this.getToday();
+    //https://stackoverflow.com/questions/3224834/get-difference-between-2-dates-in-javascript/15289883#15289883
+    // Discard the time and time-zone information.
+    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+    return Math.floor((utc2 - utc1) / this.DAY_MOD);
   },
   dateToViewString: function(d) {
     if (this.isSameDay(d, this.getToday())) {
@@ -115,6 +122,9 @@ exports.TodoData = {
     // calculate the result
     return (c * r) * 1000;
   },
+  isLocationInRange: function(locMe, locTag, range = 50) {
+    return this.distance(locMe, locTag) <= range;
+  },
   /**
    * 
    * @param {String} name 
@@ -130,7 +140,18 @@ exports.TodoData = {
     this.time = time;
     this.location = location;
   },
+  isTimeMatchTag: function(tag) {
+    var h = exports.DateUtil.getNowHour();
+    console.log(h);
+    return tag.time.some(function(el) {
+      var hh = Number(el)
+      console.log(hh);
+      return hh <= h && hh + 2 >= h
+    })
+  },
+  isLocationMatchTag: function(tag, location) {
 
+  },
   /**
    * 
    * @param {String} pid 
@@ -141,7 +162,8 @@ exports.TodoData = {
    * @param {Map<String, bool>} prereq 
    * @param {*} scene 
    */
-  Sub: function(pid, title, duedate, triggerdate = exports.getToday(), tag = null, prereq = {}, scene = null) {
+  Sub: function(pid, title = '', duedate = '', triggerdate = exports.getToday(), tag = null, prereq = {}, scene =
+    null) {
     this.iid = exports.DateUtil.genUID('sub');
     this.pid = pid
     this.title = title
@@ -153,26 +175,26 @@ exports.TodoData = {
     this.scene = ''
     this.done = false
     this.viewdata = {
-      datestr: '1999-05-04',
-      triggerstr: '1999-05-04',
+      datestr: '等待设置',
+      triggerstr: '等待设置',
       outofdate: false,
-      waiting: true,
+      waiting: false,
       projectname: pid,
     }
   },
   _get_pre_state: function(sMap, sub) {
     var alldone = true;
+    // Right usage, iterate the key
     for (var piid in sub.prereq) {
       sub.prereq[piid] = sMap(piid).done;
-      alldone |= sub.prereq[piid];
+      alldone &= sub.prereq[piid];
     }
     return alldone;
   },
   initSubView: function(pMap, sMap, sub) {
     var today = exports.DateUtil.getToday();
     sub.duedate = new Date(sub.duedate);
-    sub.viewdata.datestr = exports.DateUtil.dateToViewString(today);
-    sub.viewdata.outofdate = exports.DateUtil.isNowAfter(today);
+    sub.viewdata.datestr = exports.DateUtil.dateToViewString(sub.duedate);
     sub.viewdata.projectname = pMap(sub.pid).title;
     var td = new Date(sub.triggerdate);
     sub.triggerdate = td;
@@ -180,6 +202,8 @@ exports.TodoData = {
   },
   updateSubWaiting: function(sMap, sub) {
     sub.viewdata.waiting = !this._get_pre_state(sMap, sub) || exports.DateUtil.isNowAfter(sub.triggerdate);
+    sub.viewdata.outofdate = exports.DateUtil.isNowAfter(sub.duedate);
+    console.log(sub.iid, 'waiting: ', sub.viewdata.waiting);
     return sub.viewdata.waiting;
   },
   addPrereqState: function(sub, pre, done = false) {
@@ -222,7 +246,7 @@ exports.TodoData = {
     this.outofdate = 0;
     this.total = 0;
     this.viewdata = {
-      datestr: 'XXXXXX',
+      datestr: '等待设置',
       countdown: 0,
       score: 'S+',
     };
@@ -233,11 +257,7 @@ exports.TodoData = {
   // TODO: use better reviewing method
   // an alternative is to use quantitative scoring,
   // then convert to grade score in the view.
-  score: function(p) {
-    var done = p.done,
-      ood = p.outofdate,
-      total = p.total,
-      expired = p.viewdata.countdown < 0;
+  _score: function(done, ood, total, expired) {
     var sc;
     if (expired) sc = 'F-';
     if (ood > total / 2) sc = 'F';
@@ -256,16 +276,14 @@ exports.TodoData = {
         sc = 'A'
       }
     }
-    p.viewdata.score = sc;
     return sc;
   },
-  initProjectView: function(subMap, p) {
-    this.updateProjectView(subMap, p);
-    var today = exports.DateUtil.getToday();
-    p.duedate = new Date(p.duedate);
-    p.viewdata.datestr = exports.DateUtil.dateToViewString(p.duedate);
-    p.viewdata.countdown = exports.DateUtil.expireDays(p.duedate);
-    p.viewdata.score = this.score(p);
+  score: function(p) {
+    var done = p.done,
+      ood = p.outofdate,
+      total = p.total,
+      expired = p.viewdata.countdown < 0;
+    return p.viewdata.score = this._score(done, ood, total, expired);
   },
   /**
    * you should only update p.waiting, p.done, p.cando in setData list
@@ -273,22 +291,83 @@ exports.TodoData = {
   updateProjectView: function(subMap, p) {
     var waiting = 0,
       done = 0,
-      total = p.subs.length;
+      total = p.subs.length,
+      ood = 0;
     var _this = this;
-
-    p.subs.forEach(s => {
-      if (_this.updateSubWaiting(subMap, subMap(s))) {
+    p.subs.forEach(siid => {
+      var sub = subMap(siid)
+      console.log('in foreach sub: ', sub);
+      if (_this.updateSubWaiting(subMap, sub)) {
         waiting += 1;
       }
-      if (s.done) {
+      if (sub.done) {
         done += 1;
+      }
+      if (sub.viewdata.outofdate) {
+        ood += 1;
+        console.log('fuck')
       }
     })
     p.waiting = waiting;
     p.done = done;
+    p.outofdate = ood;
     p.cando = total - done - waiting;
     p.total = total;
-  }
+    this.score(p);
+  },
+  initProjectView: function(subMap, p) {
+    this.updateProjectView(subMap, p);
+    p.duedate = new Date(p.duedate);
+    p.viewdata.datestr = exports.DateUtil.dateToViewString(p.duedate);
+    p.viewdata.countdown = exports.DateUtil.expireDays(p.duedate);
+    p.viewdata.score = this.score(p);
+  },
+  updateProjectDuedateSet: function(pStr, newday) {
+    var updatedata = {};
+    updatedata[pStr + '.viewdata.countdown'] = exports.DateUtil.expireDays(newday);
+    updatedata[pStr + '.viewdata.datestr'] = exports.DateUtil.dateToViewString(newday);
+    return updatedata;
+  },
+  /**
+   * FIXEME: this won't work, hard to debug with
+   * leave it as experimental 
+   */
+  initProjectViewSet: function(subMap, p, pStr) {
+    var updatedata = {};
+    var waiting = 0,
+      done = 0,
+      total = p.subs.length,
+      ood = 0;
+    var _this = this;
+    p.subs.forEach(siid => {
+      var sub = subMap(siid)
+      console.log('in foreach sub: ', sub);
+      if (_this.updateSubWaiting(subMap, sub)) {
+        waiting += 1;
+      }
+      if (sub.done) {
+        done += 1;
+      }
+      if (sub.viewdata.outofdate) {
+        ood += 1;
+        console.log('fuck')
+      }
+    })
+    updatedata[pStr]
+    updatedata[pStr + '.waiting'] = waiting;
+    updatedata[pStr + '.done'] = done;
+    updatedata[pStr + '.outofdate'] = ood;
+    updatedata[pStr + '.cando'] = total - done - waiting;
+    updatedata[pStr + '.total'] = total;
+    var dd = p.duedate;
+    updatedata[pStr + '.viewdata.datestr'] = exports.DateUtil.dateToViewString(dd);
+    var cd = exports.DateUtil.expireDays(dd);
+    updatedata[pStr + '.viewdata.countdown'] = cd;
+    var expired = cd < 0;
+    updatedata[pStr + '.viewdata.score'] = this._score(done, ood, total, expired);
+    return updatedata;
+  },
+
 }
 
 exports.UserData = {
@@ -310,4 +389,5 @@ exports.UserData = {
   createUser: function(openid) {
     return new this.User(openid);
   },
+
 }
