@@ -3,7 +3,7 @@
   <view class='recm-left' catchtap='_entryclicked'>
     <view class='recm-title-tag'>
       <view class='right-margin bold-font'>{{entry.title}}</view>
-      <van-tag type="primary" class='right-margin '>{{entry.tag}}</van-tag>
+      <van-tag type="primary" class='right-margin '>{{entry.tag == null ? '普通':entry.tag}}</van-tag>
       <view class='recm-type'>
         <van-tag class='right-margin' wx:if="{{entry.viewdata.waiting}}" type="warning">等待</van-tag>
         <van-tag class='right-margin' wx:if="{{!entry.viewdata.waiting && !entry.done}}" type="success">可做</van-tag>
@@ -11,11 +11,12 @@
     </view>
     <view class='recm-project-date'>
       <view class='right-margin'>{{entry.viewdata.projectname}}</view>
-      <view class='right-margin'>{{entry.viewdata.datestr}}</view>
+      <view class='right-margin'>{{entry.viewdata.duedatestr}}</view>
       <van-tag class='right-margin' wx:if="{{entry.viewdata.outofdate}}" type="danger">超限</van-tag>
     </view>
   </view>
   <view class='recm-checkbox'>
-    <switch checked="{{entry.done}}" disabled="{{entry.viewdata.waiting}}" bindchange="_checkboxchange" type="checkbox" />
+    <switch checked="{{entry.done}}" disabled="{{entry.viewdata.waiting}}" bindchange="_checkboxchange"
+      type="checkbox" />
   </view>
 </view>

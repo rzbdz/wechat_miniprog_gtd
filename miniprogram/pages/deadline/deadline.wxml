@@ -1,8 +1,9 @@
 <view style="min-height: 100vh;width: 100vw; overflow: hidden;">
-
   <scroll-view class="sv" placeholder="true" scroll-y="true">
-    <project-card wx:for="{{ddllist}}" project="{{item}}" wx:key="pid" bindclick="cardclicked" />
+    <van-notice-bar wx:if='{{projectlist.length == 0}}' wrapable color='white' background='var(--main-red)'
+      scrollable='{{false}}' text="(＃°Д°) 你现在什么项目都没有，赶快点击右下角按钮开始一个全新项目吧！" />
+    <project-card wx:for="{{projectlist}}" project="{{item}}" wx:key="pid" bindclick="cardClicked" catchlong='delete' />
     <view style="min-height: 20vh" />
   </scroll-view>
-  <van-icon bindtap="toaddpage" class="addbutton" size='16px' color="white" name="plus" style="bottom: 6rem;" />
+  <van-icon bindtap="addProject" class="addbutton" size='16px' color="white" name="plus" style="bottom: 6rem;" />
 </view>

@@ -1,0 +1,10 @@
+<!--pages/init/init.wxml-->
+<view
+  style="display:flex;flex-direction:column;align-items:center;background-color: var(--main-red); justify-content: space-around; width: 100vw;height: 100vh;">
+  <image src='bao.png' style="height: 144px;width: 144px;" />
+  <view style="display: flex;flex-direction: column;align-items: center;">
+    <van-loading vertical color="var(--main-gray)"></van-loading>
+    <text style="font-size:smaller;margin-top:10px;color:var(--main-gray);">加载数据中</text>
+  </view>
+  <view style="height: 50px;" />
+</view>

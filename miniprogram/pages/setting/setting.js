@@ -7,9 +7,56 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    result: [],
+    _popup_show: false,
   },
-
+  addTagClicked: function(e) {
+    this.setData({
+      _popup_show: true,
+    })
+  },
+  onClose: function(e) {
+    this.setData({
+      _popup_show: false,
+    })
+  },
+  newtagtimes(event) {
+    this.setData({
+      result: event.detail,
+    });
+  },
+  loc2: function(e) {
+    wx.chooseLocation({
+      success: function(res) {
+        console.log(res)
+      },
+      fail: function(e) {
+        console.log(e)
+        wx.showModal({
+          title: "错误",
+          content: '请确定您打开了定位权限且点击了绿色的完成按钮',
+          showCancel: false,
+          success: function(res) {}
+        })
+      }
+    })
+  },
+  loc1: function(e) {
+    wx.getLocation({
+      success(res) {
+        console.log(res);
+      },
+      fail(res) {
+        console.log(res)
+        wx.showModal({
+          title: "错误",
+          content: '需要定位进行信息聚合，请确定您打开了定位权限',
+          showCancel: false,
+          success: function(res) {}
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

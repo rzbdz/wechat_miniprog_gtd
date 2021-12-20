@@ -1,74 +1,100 @@
 const { DateUtil } = require("./date");
 
 exports.TodoData = {
-  createSub: function(pid, title, duedate, triggerdate, tag, prereq = [], scene = "") {
-    return {
-      iid: DateUtil.genUID('sub-'),
-      pid: pid,
-      title: title,
-      duedate: duedate,
-      triggerdate: triggerdate,
-      prereq: prereq,
-      notify: [],
-      tag: tag,
-      scene: scene,
-      done: false,
-      addSubscriber: function(hisiid) {
-        this.notify.push(hisiid);
-      },
-      removeSubscriber: function(hisiid) {
-        var s = new Set(notify);
-        s.delete(hisiid);
-        this.notify = Array.from(s);
-      },
-      viewdata: {
-        /**
-         * datestr
-         * outofdate
-         * waiting,
-         * projectname,
-         */
-      },
-      updateView: function(mapProj) {
-        var d = new Date(duedate);
-        this.viewdata = {
-          datestr: DateUtil.dateToViewString(d),
-          outofdate: DateUtil.isNowAfter(d),
-          waiting: this.isWaiting(),
-          projectname: mapProj(pid).title,
-        }
-      },
-      removePrerq: function(iid) {
-        var s = new Set(this.prereq);
-        s.delete(iid);
-        this.prereq = Array.from(s);
-      },
-      addPrerq: function(iid) {
-        this.prereq.push(iid);
-      },
-      doIt: function(mapSub) {
-        this.done = true;
-        this.notify.forEach(i => {
-          mapSub(i).removePrerq(this.iid);
-        });
-        // this.notify = [];
-        // I cannot notify anyone since I would be undone.
-      },
-      unDoIt: function(mapSub) {
-        this.done = false;
-        this.notify.forEach(i => {
-          mapSub(i).addPrerq(this.iid);
-        });
-      },
-      isOutOfDate: function() {
-        return DateUtil.isNowAfter(new Date(duedate));
-      },
-      isWaiting: function() {
-        var trd = new Date(triggerdate);
-        console.log('asking waiting(', this.iid, '):len:', this.prereq.length, "sowhat's in it:", this.prereq);
-        return !DateUtil.isNowAfter(trd) || this.prereq.length > 0;
+  Sub: function() {
+    this.iid = ''
+    this.pid = ''
+    this.title = ''
+    this.duedate = ''
+    this.triggerdate = ''
+    this.prereq = ''
+    this.notify = {}
+    this.tag = ''
+    this.scene = ''
+    this.done = false
+    this.addSubscriber = function(hisiid) {
+      this.notify['hisiid'] = false;
+    }
+    this.removeSubscriber = function(hisiid) {
+      delete notify['hisiid'];
+    }
+    this.doNotify = function(preiid, doornot = true) {
+      notify['preiid'] = doornot;
+    }
+    this.removePrerq = function(iid) {
+      var s = new Set(this.prereq);
+      s.delete(iid);
+      this.prereq = Array.from(s);
+    }
+    this.addPrerq = function(iid) {
+      this.prereq.push(iid);
+    }
+    this.hasPreNotFinish = function() {
+      var res = true;
+      for (var key in dic) {
+        res &= dic[key];
       }
     }
+    this.viewdata = {
+      /**
+       * datestr
+       * outofdate
+       * waiting
+       * projectname
+       */
+    }
+    this.isOutOfDate = function() {
+      return DateUtil.isNowAfter(new Date(this.duedate));
+    }
+    /**
+     * call this function to update waiting
+     * everytime in application update
+     */
+    this.isWaiting = function() {
+      var trd = new Date(this.triggerdate);
+      return this.viewdata.waiting = !DateUtil.isNowAfter(trd) || this.hasPreNotFinish();
+    }
+    this.updateViewLight = this.isWaiting;
+    /**
+     * Call this function to init a project,
+     * onReload, onShow
+     * @param {(String)=>Project} mapProj 
+     */
+    this.updateView = function(mapProj) {
+      var d = new Date(this.duedate);
+      this.viewdata = {
+        datestr: DateUtil.dateToViewString(d),
+        outofdate: DateUtil.isNowAfter(d),
+        waiting: this.isWaiting(),
+        projectname: mapProj(this.pid).title,
+      }
+    }
+    this.doIt = function(mapSub) {
+      this.done = true;
+      this.notify.forEach(i => {
+        mapSub(i).doNotify(this.iid);
+      });
+      // this.notify = [];
+      // I cannot remove anyone since I would be undone.
+    }
+    this.unDoIt = function(mapSub) {
+      this.done = false;
+      this.notify.forEach(i => {
+        mapSub(i).addPrerq(this.iid);
+      });
+    }
+  },
+  createSub: function(pid, title, duedate, triggerdate, tag, prereq = [], scene = "") {
+    var r = new this.Sub();
+    r.pid = pid;
+    r.title = title;
+    r.duedate = duedate;
+    r.triggerdate = triggerdate;
+    r.tag = tag;
+    r.prereq = prereq;
+    r.scene = scene;
+    r.iid = DateUtil.genUID('sub');
+    return r;
   },
 
   Project: function() {
@@ -120,6 +146,9 @@ exports.TodoData = {
       score: 'S+',
     };
 
+    // TODO: use better reviewing method
+    // an alternative is to use quantitative scoring,
+    // then convert to grade score in the view.
     this._score_algorithm = function(done, ood, total, expired) {
       if (expired) return 'F-';
       if (ood > total / 2) return 'F';
@@ -168,7 +197,7 @@ exports.TodoData = {
    * updateView(mapSub)<br/>
    * removeSub(iid)<br/>
    */
-  createProject: function(title, duedate, subs) {
+  createProject: function(title, duedate, subs = []) {
     console.log(subs);
     var p = new this.Project();
     p.pid = DateUtil.genUID('pro');
@@ -191,5 +220,51 @@ exports.TodoData = {
     p.total = plainP.total;
     p.viewdata = plainP.viewdata;
     return p;
-  }
+  },
+  distance: function(lat1,
+    lat2, lon1, lon2) {
+    // The math module contains a function
+    // named toRadians which converts from
+    // degrees to radians.
+    lon1 = lon1 * Math.PI / 180;
+    lon2 = lon2 * Math.PI / 180;
+    lat1 = lat1 * Math.PI / 180;
+    lat2 = lat2 * Math.PI / 180;
+
+    // Haversine formula
+    let dlon = lon2 - lon1;
+    let dlat = lat2 - lat1;
+    let a = Math.pow(Math.sin(dlat / 2), 2) +
+      Math.cos(lat1) * Math.cos(lat2) *
+      Math.pow(Math.sin(dlon / 2), 2);
+
+    let c = 2 * Math.asin(Math.sqrt(a));
+
+    // Radius of earth in kilometers. Use 3956
+    // for miles
+    let r = 6371;
+
+    // calculate the result
+    return (c * r);
+  },
+  Location: function() {
+    this.lat = '';
+    this.lon = '';
+    this.name = '';
+    this.distanceTo = function(rhs) {
+      return distance(lat, rhs.lat, lon, rhs.lon);
+    }
+    this.inRangeOf = function(start_loc, radius = 0.1) {
+      var km = this.distanceTo(start_loc);
+      if (km <= radius) {
+        return true;
+      }
+      return false;
+    }
+  },
+  Tag: function() {
+    this.name = '';
+    this.time = [];
+    this.location = [];
+  },
 }

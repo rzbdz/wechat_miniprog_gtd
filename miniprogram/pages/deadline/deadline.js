@@ -1,67 +1,83 @@
 // pages/community/community.js
+var app = getApp()
 Page({
-  class_ddl: function(pid,
-    pro, ddl) {
-
-  },
-  ddlcreator: function(id, head,
-    progress, dealdate, cdown,
-    waiting, ooday, cando, done,
-    ttal, sbs, sc) {
-    return {
-      pid: id,
-      title: head,
-      pro: progress,
-      ddl: dealdate,
-      countdown: cdown,
-      wait: waiting,
-      outofdate: ooday,
-      cando: cando,
-      done: done,
-      total: ttal,
-      subs: sbs,
-      score: sc
-    }
-  },
   /**
    * 页面的初始数据
    */
   data: {
-    ddllist: [{
-      pid: "asdfh23425-test-pid-not-unique-test-only",
-      title: "刚果采矿",
-      progress: 29,
-      waiting: 999,
-      outofdate: 999,
-      cando: 999,
-      done: 20,
-      total: 90,
-      subs: [],
-      viewdata: {
-        /**
-         * datestr
-         * countdown
-         */
-        datestr: '2021-12-31',
-        countdown: 0,
-        score: 'S+',
-      },
-    }, ]
+    projectlist: []
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {},
-
+  onLoad: function(options) {
+    this.setData({ projectlist: app.getProjectList() });
+  },
+  delete: function(e) {
+    console.log('user delete something', e.detail, " should be pid!");
+    console.log('longtab')
+    var _this = this;
+    wx.showModal({
+      cancelColor: 'green',
+      confirmColor: '#ab0005',
+      title: "危险操作",
+      content: '你要抹去这个项目的存在吗？',
+      cancelText: '不',
+      confirmText: '抹去',
+      success(res) {
+        if (res.confirm) {
+          app.deleteProject(e.detail);
+          _this.setData({
+            projectlist: app.getProjectList()
+          });
+        }
+      }
+    })
+  },
+  addProject: function(e) {
+    var _this = this;
+    wx.navigateTo({
+      url: '/pages/ddldetail/ddldetail?type=add',
+      events: {
+        sendBack: function(data) {
+          console.log('i am in ddl, add button', data)
+          if (data.type == 'added') {
+            console.log(app.getProjectList());
+            _this.setData({
+              projectlist: app.getProjectList()
+            });
+          }
+        }
+      },
+      success: function(res) {
+        res.eventChannel.emit('acceptData', { type: 'add' });
+      }
+    })
+  },
+  cardClicked: function(e) {
+    var _this = this;
+    wx.navigateTo({
+      url: '/pages/ddldetail/ddldetail?type=read&pid=' + e.detail,
+      events: {
+        sendBack: function(data) {
+          console.log('i am in ddl, add button', data)
+          if (data.type == 'added') {
+            console.log(app.getProjectList());
+            _this.setData({
+              projectlist: app.getProjectList()
+            });
+          }
+        }
+      },
+      success: function(res) {
+        res.eventChannel.emit('acceptData', { type: 'add' });
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
-    this.setData({
-      ddllist: this.data
-        .ddllist
-    })
-  },
+  onReady: function() {},
 
   /**
    * 生命周期函数--监听页面显示
@@ -105,28 +121,5 @@ Page({
   onShareAppMessage: function() {
 
   },
-  cardclicked: function(e) {
-    console.log(e);
-    wx.navigateTo({
-      url: '/pages/ddldetail/ddldetail?id=1',
-      events: {
-        acceptDataFromOpenedPage: function(data) {
-          console.log('in old', data)
-        },
-        someEvent: function(data) {
-          console.log('in old', data)
-        }
-      },
-      success: function(res) {
-        // 通过eventChannel向被打开页面传送数据
-        res.eventChannel.emit('acceptDataFromOpenerPage', { data: 'testfrom old' })
-      }
-    })
-  },
 
-  toaddpage: function(e) {
-    wx.navigateTo({
-      url: '/pages/addddl/addddl',
-    })
-  }
 })

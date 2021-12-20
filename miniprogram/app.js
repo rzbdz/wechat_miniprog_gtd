@@ -2,24 +2,124 @@ App({
   async onLaunch() {
     this.initcloud()
 
+    this.globalState = {
+      isLoaded: false,
+    };
     this.globalData = {
-      user_info: {
-        id: "",
-        desc: "",
-        reg_date: "",
-      }
+      isLoaded: false,
+      user: {},
+      test: { a1: 'cde', a2: 'abc' },
     }
-
-    // console.log((await (await this.cloud()).callFunction({
-    //   name: 'register'
-    // })).result);
-    // result has a message and a result
-    // in result: 
-    // _id: "xxx"
-    // _openid: "xxx"
-    // _projects: []
   },
-
+  onHide() {
+    this.uploadUser();
+  },
+  onShow() {
+    if (this.globalState.isLoaded) {
+      this.uploadUser();
+    }
+  },
+  fillUser: function(user) {
+    this.globalData.user = user;
+    console.log('main user be', user);
+    this.globalState.isLoaded = true;
+  },
+  isLoaded() {
+    return this.globalState.isLoaded;
+  },
+  getProjectList() {
+    return Object.values(this.globalData.user.projects);
+  },
+  uploadUser() {
+    var _this = this;
+    console.log('upload data: ', _this.globalData.user);
+    wx.cloud.callFunction({
+      name: 'register',
+      data: {
+        type: 'update',
+        data: _this.globalData.user,
+        // type: 'update',
+        // data: {
+        //   _id: "c0ca0aed61bec682011f133a55eb456c",
+        //   nothing: 'fuckyou'
+        // },
+      },
+      success: function(res) {
+        console.log(res.result.message)
+      },
+      fail: console.error
+    })
+  },
+  getProject(pid) {
+    return this.globalData.user.projects[pid];
+  },
+  updateProject(pid, p) {
+    console.log('app update: ', p);
+    this.globalData.user.projects[pid] = p;
+  },
+  deleteProject(pid) {
+    var p = this.globalData.user.projects[pid];
+    var _this = this;
+    var _count = 0;
+    p.subs.forEach(e => {
+      _count += 1;
+      delete _this.globalData.user.entries[e];
+    })
+    console.log('delete: ', _count, 'entries');
+    delete this.globalData.user.projects[pid];
+  },
+  getEntryList() {
+    return Object.values(this.globalData.user.entries);
+  },
+  getEntry(iid) {
+    return this.globalData.user.entries[iid];
+  },
+  getPrereqList(iid) {
+    var e = this.globalData.user.entries[iid];
+    var res = {};
+    var _this = this;
+    e.prereq.forEach(piid => {
+      res[piid]({
+        iid: piid,
+        title: _this.globalData.user.entries[piid].title,
+      });
+    })
+  },
+  getCanAddPrereqList(pid, triggerdate) {
+    triggerdate = new Date(triggerdate);
+    var res = {};
+    var es = this.getEntriesOfProject(pid);
+    for (let i = 0; i < es.length; i++) {
+      if (es[i].triggerdate > triggerdate) {
+        break;
+      }
+      res[iid] = ({ iid: es[i].iid, name: es[i].title });
+    }
+    return res;
+  },
+  updateEntry(iid, e) {
+    console.log('app update: ', e);
+    this.globalData.user.entries[iid] = e;
+  },
+  deleteEntry(iid) {
+    console.log('app delete:', iid);
+    delete this.globalData.user.entries[iid];
+  },
+  getEntriesOfProject(pid) {
+    var myentries = [];
+    var _thises = this.globalData.user.entries;
+    this.globalData.user.projects[pid].subs.forEach(
+      eiid => {
+        _thises[eiid].triggerdate = new Date(_thises[eiid].triggerdate);
+        myentries.push(_thises[eiid]);
+      }
+    )
+    myentries.sort(function(a, b) { return a.triggerdate - b.triggerdate });
+    return myentries;
+  },
+  getTagList() {
+    return Object.values(this.globalData.user.tags);
+  },
   st: function(to) {
     wx.navigateTo({
       url: to,
@@ -68,13 +168,4 @@ App({
     return (await this.cloud()).database()
   },
 
-
-  // 获取用户唯一标识，兼容不同环境模式
-  async getOpenId() {
-    const openid = (await (await this.cloud()).callFunction({
-      name: 'mylogin'
-    })).result.openid;
-    if (openid !== "") return this.globalData.cachedopenid = openid;
-    return this.globalData.cachedopenid = fromopenid
-  }
 })

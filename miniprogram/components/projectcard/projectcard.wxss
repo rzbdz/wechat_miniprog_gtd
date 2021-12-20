@@ -37,6 +37,7 @@
 .card-des-title{
 	font-weight: bolder;
 	font-size: 1.2rem;
+	max-width: 50vw;
 	color: var(--main-red);
 	text-align: left;
 	text-overflow:ellipsis;

@@ -1,5 +1,5 @@
 <!--components/projectcard/projectcard.wxml-->
-<view class="card" bindtap="_cardclicked">
+<view class="card" catchtap="_cardclicked" catchlongtap='_long'>
   <view class='card-row'>
     <van-circle size="80" class="circlet" value="{{ project.progress}}" stroke-width="8" layer-color="#DDDDDD"
       color="#ab0005">
@@ -15,7 +15,7 @@
           type='{{project.viewdata.countdown <= 0 ? "danger" : "success"}}'>
           {{project.viewdata.countdown}}天
         </van-tag>
-        <van-tag wx:else class='right-margin' type='success'>
+        <van-tag wx:if="{{project.done==project.total || project.done!=0}}" class='right-margin' type='success'>
           已完成!
         </van-tag>
       </view>

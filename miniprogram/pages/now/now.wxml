@@ -1,5 +1,7 @@
 <view id='container'>
   <scroll-view placeholder="true" scroll-y='true' class="sv">
+    <van-notice-bar wrapable color='white' background='var(--main-red)' scrollable='{{false}}'
+      text="(●ˇ∀ˇ●) 现在是 16 时, 你有 8 件任务超限, 现在你在北京, 为你提示待办任务如下:" />
     <view id='recm-block' wx:for="{{lists}}" wx:key="description">
       <view bindtap="foldExpand" class='header-font' id='recm-block-header' data-index="{{index}}">
         <van-icon style="margin-right: 10px;" name="{{item.fold == true ? 'arrow' :'arrow-down'}}"></van-icon>

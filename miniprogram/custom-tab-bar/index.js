@@ -13,7 +13,7 @@ Component({
       },
       {
         pagePath: "/pages/deadline/deadline",
-        text: "死线",
+        text: "项目",
         icon: "todo-list"
       },
       // {

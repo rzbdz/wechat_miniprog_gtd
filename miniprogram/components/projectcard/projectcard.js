@@ -43,5 +43,8 @@ Component({
     _cardclicked() {
       this.triggerEvent("click", this.data.project.pid);
     },
+    _long() {
+      this.triggerEvent("long", this.data.project.pid);
+    },
   }
 })

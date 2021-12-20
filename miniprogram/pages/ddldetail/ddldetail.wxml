@@ -1,25 +1,28 @@
 <!--pages/ddldetail/ddldetail.wxml-->
-<button bindtap='go'>Go</button>
+<button bindtap='saveButtonClick' wx:if='{{_show_save}}'>保存</button>
 <view style="max-height: 100vh;width: 100vw; overflow: hidden;">
   <!--WARNING MESSAGE-->
-  <van-notice-bar wx:if='{{project.viewdata.countdown < 0}}' left-icon='info-o' text='此项目已逾期，请调整或修改截至日期！'
-    background='var(--main-red)' mode='closeable' color='white' />
+  <van-notice-bar wx:if='{{project.viewdata.countdown < 0 && project.done == false}}' left-icon='info-o'
+    text='此项目已逾期，请调整或修改截至日期！' background='var(--main-red)' mode='closeable' color='white' />
   <van-notice-bar wx:if="{{project.viewdata.score[0] == 'F'}}" left-icon='info-o' text='此项目进展不佳，请检查逾期事件进度！'
     background='var(--main-red)' mode='closeable' color='white' />
   <!-----INFO---MAIN VIEW START FROM HERE-->
   <view class='meta-block-shadow'>
     <view class='meta-title-block flex-row'>
       <textarea focus="{{_title_focus}}" class='meta-title-text' auto-height value='{{project.title}}'
-        placeholder="在此输入项目名称" />
-      <van-icon bindtap='edittitle' name='edit' />
+        bindblur='titleChange' placeholder="在此输入项目名称" />
+      <van-icon bindtap='editTtitleButtonClick' name='edit' />
     </view>
-    <view class='flex-row' bindtap='showcalendar'>
+    <view class='flex-row' bindtap='showCalendar'>
       <view class='kvrow'>
         <view class='bold-font'>期限:</view>
-        <view class='left-margin right-margin'>{{project.viewdata.datestr}}</view>
+        <view class='left-margin right-margin'>{{project.viewdata.duedatestr}}</view>
         <van-tag wx:if="{{project.done!=project.total}}" class='right-margin'
-          type='{{project.viewdata.countdown <= 0 ? "danger" : "success"}}'>
+          type='{{project.viewdata.countdown < 0 ? "danger" : "success"}}'>
           {{project.viewdata.countdown}}天
+        </van-tag>
+        <van-tag wx:elif="{{project.done==0}}" class='right-margin' type='success'>
+          空项目
         </van-tag>
         <van-tag wx:else class='right-margin' type='success'>
           已完成!
@@ -36,57 +39,16 @@
       <view class='left-margin right-margin'>{{project.viewdata.score}}</view>
     </view>
   </view>
-  <van-calendar style="z-index:999;" bind:confirm='confirmcalendar' bind:close='closecalendar' show='{{_show_calendar}}'
+  <van-calendar style="z-index:999;" bind:confirm='confirmCalendar' bind:close='closeCalendar' show='{{_show_calendar}}'
     color="var(--main-red)" />
   <!--ENTRY CARDS-->
   <scroll-view style='margin-top: 5px;height: calc(100vh - 100px);width: 100vw;' scroll-y='true'>
     <view style="height: var(--normal-margin);" />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
-    <entry-card />
+    <!--https://developers.weixin.qq.com/miniprogram/dev/reference/wxml/list.html-->
+    <!--https://www.jianshu.com/p/2b08737941f3-->
+    <!--ev.target.dataset.index-->
+    <entry-card wx:for="{{project.subs}}" wx:key='iid' entry='{{item}}' data-index='{{index}}' />
     <view style="height:100px;" />
   </scroll-view>
-  <van-icon bindtap="addclicked" class="addbutton" size='16px' color="white" name="plus" style='bottom:3rem' />
+  <van-icon bindtap="addButtonClicked" class="addbutton" size='16px' color="white" name="plus" style='bottom:3rem' />
 </view>

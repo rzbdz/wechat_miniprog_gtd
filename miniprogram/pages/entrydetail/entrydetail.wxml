@@ -1,87 +1,118 @@
 <!--pages/entrydetail/entrydetail.wxml-->
+<page-meta page-style="{{ (_pre_popup_show || _tag_popup_show) ? 'overflow: hidden;' : '' }}" />
 <button bindtap='go'>Let me go!</button>
-<view style="height: 100vh;width: 100vw; overflow: hidden;">
+<scroll-view style="height: 100vh;width: 100vw; " scroll-y='true'>
   <!--WARNING MESSAGE-->
   <van-notice-bar wx:if='{{entry.viewdata.outofdate}}' left-icon='info-o' text='此任务已逾期，请调整或修改截至日期！'
     background='var(--main-red)' mode='closeable' color='white' />
   <van-notice-bar wx:if="{{entry.viewdata.waiting}}" left-icon='info-o' text='此项目需等待，请检查依赖项目或起始日！' background='#ffa5a5'
     mode='closeable' color='white' />
   <!-----INFO---MAIN VIEW START FROM HERE-->
-  <view class='meta-block-shadow bottom-margin' style='padding-bottom: var(--normal-margin)!important;'>
+  <view style='max-width: 100vw;' class='meta-block-shadow bottom-margin'
+    style='padding-bottom: var(--normal-margin)!important;'>
     <view class='meta-title-block flex-row bottom-margin'>
       <view class='kvrow'>
         <switch class="right-margin" disabled="{{entry.viewdata.waiting}}" checked="{{entry.done}}"
-          bindchange="checkboxchange" type="checkbox" />
-        <textarea focus="{{_title_focus}}" class='meta-title-text' auto-height value='{{project.title}}'
-          placeholder="在此输入任务名称" />
+          bindchange="doneCheck" type="checkbox" />
+        <textarea bindblur='titleChange' style="max-width: 70vw;" maxlength='50' focus="{{_title_focus}}"
+          class='meta-title-text' auto-height value='{{entry.title}}' placeholder="在此输入任务名称" />
       </view>
-      <van-icon bindtap='edittitle' name='edit' />
+      <van-icon bindtap='editTitleClick' name='edit' />
     </view>
-    <view style='font-size:small;color:lightgray;'>来自: 美国水电站项目
+    <view style='font-size:small;color:lightgray;'>来自: {{entry.viewdata.projectname}}
     </view>
   </view>
   <!--TAG!-->
-  <view class='flex-row meta-block-shadow-small bottom-margin'>
+  <view class='flex-row meta-block-shadow bottom-margin' bindtap='tagPopupShow'>
     <view class='kvrow'>
       <view class='bold-font right-margin'>标签:</view>
-      <van-tag type='primary'>工地活</van-tag>
+      <van-tag type='primary'>{{entry.tag}}</van-tag>
     </view>
-    <van-icon bindtap='edittag' class='large-red' name='edit' />
+    <van-icon class='large-red' name='edit' />
   </view>
   <!--TIME-->
-  <view class='meta-block-shadow-small bottom-margin'>
-    <view class='flex-row bottom-margin'>
+  <view class='meta-block-shadow bottom-margin'>
+    <view class='flex-row' bindtap='showCalendar' data-which='triggerdate'>
       <view class='kvrow'>
         <view class='bold-font right-margin'>起始:</view>
-        <view>2021-12-31</view>
-      </view>
-      <van-icon bindtap='edittriggerdate' class='large-red' name='calendar-o' />
-    </view>
-    <view class='flex-row'>
-      <view class='kvrow'>
-        <view class='bold-font right-margin'>期限:</view>
-        <view>2021-12-31</view>
-      </view>
-      <van-icon bindtap='editduedate' class='large-red' name='calendar-o' />
-    </view>
-  </view>
-  <!--PREREQUISTE-->
-  <view class='meta-block-shadow-small bottom-margin'>
-    <view class='flex-row bottom-margin'>
-      <view class='bold-font'>依赖项目</view>
-      <van-icon color='var(--main-red)' class='large-red' name='plus' />
-    </view>
-    <view class='flex-row top-border'>
-      <view class='item'>项目 A</view>
-      <van-icon color='var(--main-red)' class='large-red' name='minus' />
-    </view>
-  </view>
-  <van-calendar style="z-index:999;" bind:confirm='confirmcalendar' bind:close='closecalendar' show='{{_show_calendar}}'
-    color="var(--main-red)" />
-</view>
-<van-icon bindtap="addclicked" class="addbutton" size='16px' color="white" name="success" style='bottom:3rem' />
-
-<!--
-	    <view class='flex-row' bindtap='showcalendar'>
-      <view class='kvrow'>
-        <view class='bold-font'>期限:</view>
-        <view class='left-margin right-margin'>{{project.viewdata.datestr}}</view>
-        <van-tag wx:if="{{project.done!=project.total}}" class='right-margin'
-          type='{{project.viewdata.countdown <= 0 ? "danger" : "success"}}'>
-          {{project.viewdata.countdown}}天
-        </van-tag>
-        <van-tag wx:else class='right-margin' type='success'>
-          已完成!
-        </van-tag>
+        <view>{{entry.viewdata.triggerdatestr}}</view>
       </view>
       <van-icon class='large-red' name='calendar-o' />
     </view>
-    <view class='kvrow'>
-      <view class='bold-font'>进度：</view>
-      <view>第 {{project.done}} 步，共 {{project.total}} 步</view>
+    <van-divider />
+    <view class='flex-row' bindtap='showCalendar' data-which='duedate'>
+      <view class='kvrow' bindtap='showCalendar'>
+        <view class='bold-font right-margin'>期限:</view>
+        <view>{{entry.viewdata.duedatestr}}</view>
+      </view>
+      <van-icon class='large-red' name='calendar-o' />
     </view>
-    <view class='kvrow'>
-      <view class='bold-font'>评分：</view>
-      <view class='left-margin right-margin'>{{project.viewdata.score}}</view>
+  </view>
+  <!--PREREQUISTE-->
+  <view class='meta-block-shadow bottom-margin'>
+    <view class='flex-row bottom-margin'>
+      <view class='bold-font'>依赖任务</view>
+      <van-icon color='var(--main-red)' class='large-red' name='plus' bindtap='addPrereqClicked' />
     </view>
--->
+    <view wx:for='{{prereq}}' wx:for-index='key' wx:for-item='value' wx:key='iid'>
+      <van-divider />
+      <view class='flex-row'>
+        <view class='item'>{{value.title}}</view>
+        <van-icon bindtap='deletePrereqClicked' data-iid='{{key}}' color='var(--main-red)' class='large-red'
+          name='minus' />
+      </view>
+    </view>
+  </view>
+  <!--HIDDING NOT DESIGNED-->
+  <view wx:if='{{false}}' class='meta-block-shadow-small bottom-margin'>
+    <view class='flex-row bottom-margin'>
+      <view class='bold-font'>备注</view>
+      <van-icon color='var(--main-red)' class='large-red' name='edit' />
+    </view>
+    <textarea disabled='true' placeholder="备注功能敬请期待" />
+  </view>
+  <view style="height: 30vh;" />
+</scroll-view>
+<van-calendar style="z-index:999;" bind:confirm='confirmCalendar' bind:close='closeCalendar' show='{{_show_calendar}}'
+  color="var(--main-red)" />
+<van-icon bindtap="addclicked" class="addbutton" size='16px' color="white" name="success" style='bottom:3rem' />
+
+<van-popup show="{{ _tag_popup_show }}" custom-style='max-height:70%;' position="bottom" bind:close="tagPopupOnClose">
+  <view style="padding:var(--normal-margin);">
+    <view class='header-font' style='margin-top: var(--normal-margin);margin-left:var(--normal-margin)'>
+      选择标签
+    </view>
+    <radio-group bindchange='tagChange'>
+      <view class='tagcard' wx:for='{{taglist}}' wx:key='name'>
+        <label for='{{item.name}}'>
+          <view class='card-left'>
+            <view class='name-time-row'>
+              <view class='tag-name right-margin'>{{item.name}}</view>
+              <view class='row-time-vec'>
+                <van-tag type='primary' wx:for='{{item.time}}' wx:key="*this" class='right-margin'>{{item}}</van-tag>
+              </view>
+            </view>
+            <view wx:for='{{item.location}}' wx:key='lat' class='row-location'>{{item.name}}</view>
+          </view>
+        </label>
+        <radio id='{{item.name}}' color='#ab0005' value='{{item.name}}' checked='{{entry.tag == item.name}}' />
+      </view>
+    </radio-group>
+  </view>
+</van-popup>
+
+<van-popup show="{{ _pre_popup_show }}" custom-style='max-height:70%;' position="bottom" bind:close="prePopupOnClose">
+  <view style="padding:var(--normal-margin);">
+    <view class='header-font' style='margin-top: var(--normal-margin);margin-left:var(--normal-margin)'>
+      添加依赖
+    </view>
+    <radio-group bindchange='preChange'>
+      <view class='tagcard' wx:for='{{canPre}}' wx:for-index='key' wx:for-item='value' wx:key='iid'>
+        <label for='{{key}}'>
+          <view class='tag-name right-margin'>{{value.title}}</view>
+        </label>
+        <radio id='{{key}}' checked='{{false}}' color='#ab0005' value='{{key}}' />
+      </view>
+    </radio-group>
+  </view>
+</van-popup>
