@@ -154,6 +154,7 @@ Page({
     //   console.log('in new', data)
     // })
     eventChannel.emit('sendBack', { type: 'added' });
+    app.uploadUser();
   },
 
   /**

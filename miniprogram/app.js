@@ -17,13 +17,9 @@ App({
     this.uploadUser();
   },
   onShow() {
-    if (this.globalState.isLoaded) {
-      this.uploadUser();
-    }
   },
   fillUser: function(user) {
     this.globalData.user = user;
-    // console.log('main user be', user);
     this.globalState.isLoaded = true;
   },
   isLoaded() {
@@ -38,25 +34,17 @@ App({
     var l = Object.values(this.globalData.user.projects);
     l.sort((a, b) => { return new Date(a.duedate) - new Date(b.duedate) })
     l.forEach(p => {
-      // console.log(p);
       TodoData.initProjectView((iid) => { return _this.getEntry(iid) }, p);
     })
-    // console.log(l);
     return l;
   },
   uploadUser() {
     var _this = this;
-    // console.log('upload data: ', _this.globalData.user);
     wx.cloud.callFunction({
       name: 'register',
       data: {
         type: 'update',
         data: _this.globalData.user,
-        // type: 'update',
-        // data: {
-        //   _id: "c0ca0aed61bec682011f133a55eb456c",
-        //   nothing: 'fuckyou'
-        // },
       },
       success: function(res) {
         console.log(res)
@@ -72,6 +60,7 @@ App({
   updateProject(pid, p) {
     // console.log('app update: ', p);
     this.globalData.user.projects[pid] = p;
+    this.uploadUser();
   },
   deleteProject(pid) {
     var p = this.globalData.user.projects[pid];
@@ -86,6 +75,7 @@ App({
     _this.globalData.user.recent = Array.from(ths);
     // console.log('delete: ', _count, 'entries');
     delete this.globalData.user.projects[pid];
+    this.uploadUser();
   },
   getEntryList() {
     return Object.values(this.globalData.user.entries);
@@ -225,6 +215,7 @@ App({
     ss.delete(iid);
     this.globalData.user.projects[pid].subs = Array.from(ss);
     delete this.globalData.user.entries[iid];
+    this.uploadUser();
   },
   getEntriesOfProject(pid) {
     var myentries = [];
@@ -261,6 +252,7 @@ App({
   updateTag(tag) {
     // console.log(tag);
     this.globalData.user.tags[tag.name] = tag;
+    this.uploadUser();
   },
   deleteTag(name) {
     if (this.globalData.user.tags[name].refcnt > 0) {
@@ -273,6 +265,7 @@ App({
       return;
     }
     delete this.globalData.user.tags[name];
+    this.uploadUser();
   },
   st: function(to) {
     wx.navigateTo({

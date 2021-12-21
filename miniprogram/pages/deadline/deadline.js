@@ -1,4 +1,3 @@
-// pages/community/community.js
 var app = getApp()
 Page({
   /**

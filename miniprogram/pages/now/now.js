@@ -6,6 +6,9 @@ Page({
   /**
    * 页面的初始数据
    */
+  state: {
+    cachedLocation: {},
+  },
   data: {
     hour: 0,
     empty: false,
@@ -45,6 +48,11 @@ Page({
     updatedata['lists[' + this.recentin + '].list'] = app.getRecentAdd();
     updatedata['lists[' + this.duein + '].list'] = app.getTodayEList();
     updatedata['hour'] = DateUtil.getNowHour();
+    if (this.state.cachedLocation) {
+      updatedata['lists[' + this.locin + '].list'] = app.getLocationEList(this.state.cachedLocation);
+    } else {
+      updatedata['lists[' + this.locin + '].list'] = [];
+    }
     this.setData(updatedata);
     console.log(updatedata, 'fuck the what?');
   },
@@ -67,10 +75,10 @@ Page({
     if (!this.data.empty) {
       wx.getLocation({
         success(res) {
-          var loc = new TodoData.Location(res.latitude, res.longitude, '定位数据没有名称');
+          _this.state.cachedLocation = new TodoData.Location(res.latitude, res.longitude, '定位数据没有名称');
           // console.log(loc);
           var updatedata = {};
-          updatedata['lists[' + _this.locin + '].list'] = app.getLocationEList(loc);
+          updatedata['lists[' + _this.locin + '].list'] = app.getLocationEList(_this.state.cachedLocation);
           _this.setData(updatedata);
         },
         fail() {
@@ -141,7 +149,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-
+    app.uploadUser();
   },
 
   /**
