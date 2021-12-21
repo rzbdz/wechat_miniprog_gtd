@@ -14,7 +14,8 @@
 根据 GTD 理论，用户时刻需要根据当前工作场景进行 [Trigger List](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiyk7_zqvT0AhWXdHAKHfBsDpAQFnoECAIQAQ&url=https%3A%2F%2Fgettingthingsdone.com%2Fwp-content%2Fuploads%2F2014%2F10%2FMind_Sweep_Trigger_List.pdf&usg=AOvVaw0AJdqt9gZ47GT3h6XUAhrQ) 的 **Polling** 遍历，耗时费神。本小程序把低效的**轮询**改为**中断机制**。并给用户提供**标签**这一**依赖注入接口**，通过一个简化的**标签功能**根据实时生活场景（主要依赖实时定位和时间段分析）进行个性化任务推荐，聚焦当前最应该做的任务，避免重复进行选择判断。
 
 本小程序**执行部分**根据 GTD 理论，只抽象出**项目**和**任务**两个概念，通过用户提前注入**场景**，如时间点触发，地理位置触发，生活场景触发。将**条目**根据场景分为各种不同类型的执行**促进生活场景全链路打通**，利用小程序 API 获取地理时间信息**形成抓手**，使用户生活**形成闭环**。
-
+## 隐私声明
+仓库里的云函数代码和生产环境上的不同，没有数据泄漏漏洞及替换数据的漏洞。但是用户数据开发者完全可以浏览到，所以实际不会有人想要使用这个小程序。想要让后端所有者完全看不到数据的方法只有强制用户设定密钥，并且服务器不存储。所以实际还是只能作为交作业用途。
 # 预览
 
 ![preview](./.res/preview.png)
