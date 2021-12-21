@@ -15,7 +15,7 @@
 
 # 预览
 
-![preview](./res/preview.png)
+![preview](./.res/preview.png)
 
 # 扩展方向
 
