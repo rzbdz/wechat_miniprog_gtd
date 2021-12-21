@@ -16,11 +16,6 @@ Component({
         text: "项目",
         icon: "todo-list"
       },
-      // {
-      //   pagePath: "/pages/community/community",
-      //   text: "社区",
-      //   icon: "friends"
-      // },
       {
         pagePath: "/pages/setting/setting",
         text: "设置",

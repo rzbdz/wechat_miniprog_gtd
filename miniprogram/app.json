@@ -7,7 +7,6 @@
     "pages/setting/setting",
     "pages/ddldetail/ddldetail",
     "pages/now/now",
-    "pages/community/community",
     "custom-tab-bar/index"
   ],
   "window": {
@@ -28,10 +27,6 @@
       {
         "pagePath": "pages/deadline/deadline",
         "text": "死线"
-      },
-      {
-        "pagePath": "pages/community/community",
-        "text": "外包"
       },
       {
         "pagePath": "pages/setting/setting",
