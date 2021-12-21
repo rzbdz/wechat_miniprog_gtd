@@ -1,8 +1,8 @@
 <!--pages/ddldetail/ddldetail.wxml-->
-<button bindtap='saveButtonClick' wx:if='{{_show_save}}'>保存</button>
 <view style="max-height: 100vh;width: 100vw; overflow: hidden;">
+  <van-notify style="z-index: 9999;" id="van-notify" />
   <!--WARNING MESSAGE-->
-  <van-notice-bar wx:if='{{project.viewdata.countdown < 0 && project.done == false}}' left-icon='info-o'
+  <van-notice-bar wx:if='{{project.viewdata.countdown < 0 && project.done != project.total}}' left-icon='info-o'
     text='此项目已逾期，请调整或修改截至日期！' background='var(--main-red)' mode='closeable' color='white' />
   <van-notice-bar wx:if="{{project.viewdata.score[0] == 'F'}}" left-icon='info-o' text='此项目进展不佳，请检查逾期事件进度！'
     background='var(--main-red)' mode='closeable' color='white' />
@@ -47,7 +47,8 @@
     <!--https://developers.weixin.qq.com/miniprogram/dev/reference/wxml/list.html-->
     <!--https://www.jianshu.com/p/2b08737941f3-->
     <!--ev.target.dataset.index-->
-    <entry-card wx:for="{{project.subs}}" wx:key='iid' entry='{{item}}' data-index='{{index}}' />
+    <entry-card wx:for="{{entriesofproject}}" wx:key='iid' entry='{{item}}' data-index='{{index}}'
+      data-iid='{{item.iid}}' bindclick='entryClicked' bindcheck='entryChecked' bindlong='delete' />
     <view style="height:100px;" />
   </scroll-view>
   <van-icon bindtap="addButtonClicked" class="addbutton" size='16px' color="white" name="plus" style='bottom:3rem' />

@@ -19,6 +19,10 @@
 }
 .row-location{
 	font-size:small;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 60vw;
+	white-space: nowrap;
 }
 .name-time-row{
 	display: flex;

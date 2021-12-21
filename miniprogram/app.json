@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/entrydetail/entrydetail",
     "pages/init/init",
+    "pages/entrydetail/entrydetail",
     "pages/testpage",
     "pages/deadline/deadline",
     "pages/setting/setting",
@@ -46,6 +46,7 @@
   },
   "sitemapLocation": "sitemap.json",
   "usingComponents": {
+    "van-notify": "@vant/weapp/notify/index",
     "van-checkbox": "@vant/weapp/checkbox/index",
     "van-checkbox-group": "@vant/weapp/checkbox-group/index",
     "van-popup": "@vant/weapp/popup/index",
@@ -63,7 +64,6 @@
     "van-field": "@vant/weapp/field/index",
     "van-rate": "@vant/weapp/rate/index",
     "van-loading": "@vant/weapp/loading/index",
-    "van-notify": "@vant/weapp/notify/index",
     "van-share-sheet": "@vant/weapp/share-sheet/index",
     "van-image": "@vant/weapp/image/index",
     "van-circle": "@vant/weapp/circle/index",

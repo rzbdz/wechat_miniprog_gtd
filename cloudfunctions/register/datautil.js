@@ -63,29 +63,10 @@ exports.DateUtil = {
     return t.getHours();
   },
 
-  isNowAfter: function(b) {
-    var a = this.getToday();
-    b = new Date(b);
-    // console.log(a, b);
-    //https://stackoverflow.com/questions/3224834/get-difference-between-2-dates-in-javascript/15289883#15289883
-    // Discard the time and time-zone information.
-    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-    // console.log('now:', utc1, 'veri: ', utc2);
-    return utc1 > utc2;
+  isNowAfter: function(date) {
+    return this.getDayStamp(new Date(date)) < this.getDayStamp(this.getToday());
   },
-  isNowBefore: function(b) {
-    b = new Date(b);
-    var a = this.getToday();
-    // console.log(a, b);
-    //https://stackoverflow.com/questions/3224834/get-difference-between-2-dates-in-javascript/15289883#15289883
-    // Discard the time and time-zone information.
-    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-    // console.log('now:', utc1, 'veri: ', utc2);
-    return utc1 < utc2;
 
-  },
   isSameDay: function(first, second) {
     return first.getFullYear() === second.getFullYear() &&
       first.getMonth() === second.getMonth() &&
@@ -141,10 +122,8 @@ exports.TodoData = {
     // calculate the result
     return (c * r) * 1000;
   },
-  isLocationInRange: function(locMe, locTag, range = 600) {
-    var d = this.distance(locMe, locTag)
-    console.log(d + 'm')
-    return d <= range;
+  isLocationInRange: function(locMe, locTag, range = 50) {
+    return this.distance(locMe, locTag) <= range;
   },
   /**
    * 
@@ -160,20 +139,18 @@ exports.TodoData = {
     this.name = name;
     this.time = time;
     this.location = location;
-    this.refcnt = 0;
   },
-  isTimeMatchTag: function(tag, h = exports.DateUtil.getNowHour()) {
+  isTimeMatchTag: function(tag) {
+    var h = exports.DateUtil.getNowHour();
     // console.log(h);
     return tag.time.some(function(el) {
       var hh = Number(el)
-      console.log('tagh:', hh, 'now：', h);
-      return hh <= h && hh + 1 >= h
+      // console.log(hh);
+      return hh <= h && hh + 2 >= h
     })
   },
   isLocationMatchTag: function(tag, location) {
-    return tag.location.some(function(el) {
-      return exports.TodoData.isLocationInRange(location, el);
-    })
+
   },
   /**
    * 
@@ -185,9 +162,7 @@ exports.TodoData = {
    * @param {Map<String, bool>} prereq 
    * @param {*} scene 
    */
-  Sub: function(pid, title = '', duedate = exports.DateUtil.getToday(), triggerdate = exports.DateUtil.getToday(),
-    tag = '普通', prereq = {},
-    scene =
+  Sub: function(pid, title = '', duedate = '', triggerdate = exports.getToday(), tag = null, prereq = {}, scene =
     null) {
     this.iid = exports.DateUtil.genUID('sub');
     this.pid = pid
@@ -200,8 +175,8 @@ exports.TodoData = {
     this.scene = ''
     this.done = false
     this.viewdata = {
-      duedatestr: '等待设置',
-      triggerdatestr: '等待设置',
+      datestr: '等待设置',
+      triggerstr: '等待设置',
       outofdate: false,
       waiting: false,
       projectname: pid,
@@ -216,33 +191,25 @@ exports.TodoData = {
     }
     return alldone;
   },
-  updateSubViewProjectName: function(pMap, sub) {
-    sub.viewdata.projectname = pMap(sub.pid).title;
-  },
   initSubView: function(pMap, sMap, sub) {
-    this.updateSubViewProjectName(pMap, sub);
-    this.updateSubViewLocally(sMap, sub);
-  },
-  updateSubViewLocally: function(sMap, sub) {
-    // console.log('due:', sub.duedate);
+    var today = exports.DateUtil.getToday();
     sub.duedate = new Date(sub.duedate);
-    sub.viewdata.outofdate = exports.DateUtil.isNowAfter(sub.duedate);
-    sub.viewdata.duedatestr = exports.DateUtil.dateToViewString(sub.duedate);
-    // console.log('due:', sub.triggerdate);
-    sub.triggerdate = new Date(sub.triggerdate);
-    sub.viewdata.triggerdatestr = exports.DateUtil.dateToViewString(sub.triggerdate);
+    sub.viewdata.datestr = exports.DateUtil.dateToViewString(sub.duedate);
+    sub.viewdata.projectname = pMap(sub.pid).title;
+    var td = new Date(sub.triggerdate);
+    sub.triggerdate = td;
     this.updateSubWaiting(sMap, sub);
   },
   updateSubWaiting: function(sMap, sub) {
-    // console.log('update sub: ', sub);
-    sub.viewdata.waiting = !this._get_pre_state(sMap, sub) || exports.DateUtil.isNowBefore(sub.triggerdate);
+    sub.viewdata.waiting = !this._get_pre_state(sMap, sub) || exports.DateUtil.isNowAfter(sub.triggerdate);
+    sub.viewdata.outofdate = exports.DateUtil.isNowAfter(sub.duedate);
     // console.log(sub.iid, 'waiting: ', sub.viewdata.waiting);
     return sub.viewdata.waiting;
   },
-  addPrereqState: function(sub, pre) {
+  addPrereqState: function(sub, pre, done = false) {
     var preiid = pre.iid;
     // add a prereq in my req list
-    sub.prereq[preiid] = pre.done;
+    sub.prereq[preiid] = done;
     // add me to prereq's notify list
     pre.notify.push(sub.iid);
   },
@@ -256,20 +223,18 @@ exports.TodoData = {
     pre.notify = Array.from(s);
   },
   doneEntry: function(SubMap, sub) {
-    sub.done = true;
     // notify who depend on me
     sub.notify.forEach(n => {
       SubMap(n).prereq[sub.iid] = true;
     })
   },
   undoneEntry: function(SubMap, sub) {
-    sub.done = false;
     // notify who depend on me
     sub.notify.forEach(n => {
       SubMap(n).prereq[sub.iid] = false;
     })
   },
-  Project: function(title = '', duedate = exports.DateUtil.getToday(), subs = []) {
+  Project: function(title = '', duedate = '', subs = []) {
     this.pid = exports.DateUtil.genUID('pro');
     this.title = title;
     this.duedate = duedate;
@@ -281,7 +246,7 @@ exports.TodoData = {
     this.outofdate = 0;
     this.total = 0;
     this.viewdata = {
-      duedatestr: '等待设置',
+      datestr: '等待设置',
       countdown: 0,
       score: 'S+',
     };
@@ -348,20 +313,19 @@ exports.TodoData = {
     p.outofdate = ood;
     p.cando = total - done - waiting;
     p.total = total;
-    p.progress = Math.floor(p.done / p.total * 100);
     this.score(p);
   },
   initProjectView: function(subMap, p) {
     this.updateProjectView(subMap, p);
     p.duedate = new Date(p.duedate);
-    p.viewdata.duedatestr = exports.DateUtil.dateToViewString(p.duedate);
+    p.viewdata.datestr = exports.DateUtil.dateToViewString(p.duedate);
     p.viewdata.countdown = exports.DateUtil.expireDays(p.duedate);
     p.viewdata.score = this.score(p);
   },
   updateProjectDuedateSet: function(pStr, newday) {
     var updatedata = {};
     updatedata[pStr + '.viewdata.countdown'] = exports.DateUtil.expireDays(newday);
-    updatedata[pStr + '.viewdata.duedatestr'] = exports.DateUtil.dateToViewString(newday);
+    updatedata[pStr + '.viewdata.datestr'] = exports.DateUtil.dateToViewString(newday);
     return updatedata;
   },
   /**
@@ -396,7 +360,7 @@ exports.TodoData = {
     updatedata[pStr + '.cando'] = total - done - waiting;
     updatedata[pStr + '.total'] = total;
     var dd = p.duedate;
-    updatedata[pStr + '.viewdata.duedatestr'] = exports.DateUtil.dateToViewString(dd);
+    updatedata[pStr + '.viewdata.datestr'] = exports.DateUtil.dateToViewString(dd);
     var cd = exports.DateUtil.expireDays(dd);
     updatedata[pStr + '.viewdata.countdown'] = cd;
     var expired = cd < 0;
@@ -417,10 +381,9 @@ exports.UserData = {
     // okay to store a redundant id as key
     this.projects = {};
     this.tags = {
-      '普通': new exports.TodoData.Tag('普通'),
+      '普通': new exports.Tag('普通'),
     };
     this.entries = {};
-    this.recent = [];
     this.description = 'perserved keyword';
     this.register_date = Date.now();
     this.reputation = 'comming soon';

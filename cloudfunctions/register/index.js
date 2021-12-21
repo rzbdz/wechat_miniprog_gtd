@@ -14,9 +14,9 @@ exports.main = async (event, context) => {
   }
   var dt;
   const db = cloud.database()
-  const todos = db.collection('todos')
+  const users = db.collection('users')
   if (event.type === 'onload') {
-    const re = await todos.where({
+    const re = await users.where({
       openid: meta.openid
     }).get();
     var msg;
@@ -26,11 +26,10 @@ exports.main = async (event, context) => {
     } else {
       msg = '注册成功！'
       dt = new UserData.User(meta.openid);
-      
-      c = await todos.add({
+      c = await users.add({
         data: dt,
       })
-      console.log(c)
+      // console.log(c)
     }
     return { message: msg, data: dt };
   } else if (event.type === 'update') {
@@ -38,7 +37,11 @@ exports.main = async (event, context) => {
     dt = event.data;
     dbid = dt._id;
     delete dt['_id'];
-    await todos.doc(dbid).set({ data: dt })
+    try {
+      await users.doc(dbid).set({ data: dt })
+    } catch {
+      return { message: '失败了，尝试的dbid:', dbid: dbid };
+    }
     return { message: msg };
     //return { message: { da: dt, db: dbid } }
   }

@@ -1,6 +1,6 @@
 <!--components/entrycard/entrycard.wxml-->
 <view class='recm-inner-card'>
-  <view class='recm-left' catchtap='_entryclicked'>
+  <view class='recm-left' catchlongpress='_long' catchtap='_entryclicked'>
     <view class='recm-title-tag'>
       <view class='right-margin bold-font'>{{entry.title}}</view>
       <van-tag type="primary" class='right-margin '>{{entry.tag == null ? '普通':entry.tag}}</van-tag>

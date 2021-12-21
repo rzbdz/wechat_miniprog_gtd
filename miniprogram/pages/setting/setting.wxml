@@ -1,82 +1,32 @@
 <scroll-view class='sv'>
   <view class='hd' style="display: flex;flex-direction: row;justify-content: space-between; align-items: center;">
     <view class="header-font">自定义标签触发器</view>
-    <van-button color='#ab0005' bindtap='addTagClicked' custom-style="border-radius:4px;" size='small' icon='plus'>添加标签</van-button>
+    <van-button color='#ab0005' bindtap='addTagClicked' custom-style="border-radius:4px;" size='small' icon='plus'>添加标签
+    </van-button>
   </view>
   <view style="font-size: small; margin: 0px 20px 16px 20px;">
     <text>
-      每个标签触发器具备最多 4 个时间触发属性, 每 2 小时划分一个时间片和 2 个地理定位触发属性, 定位精度为 50m。
+      每个标签触发器具备最多 4 个时间触发属性, 每 2 小时划分一个时间片和 2 个地理定位触发属性, 定位精度为 50m。普通标签是内置默认标签，不可移除。
     </text>
   </view>
   <van-divider custom-style="margin: 0px 16px 0px 16px" />
-  <view bindtap='fucktest' class='tagcard'>
+  <view class='tagcard' wx:for="{{tags}}" wx:key='name' wx:for-index='key' wx:for-item='value'>
     <view class='card-left'>
       <view class='name-time-row'>
-        <view class='tag-name right-margin'>吃饭</view>
+        <view class='tag-name right-margin'>{{key}}</view>
         <view class='row-time-vec'>
-          <van-tag type='primary' class='right-margin'>3</van-tag>
-          <van-tag type='primary' class="right-margin">5</van-tag>
-          <van-tag type='primary' class="right-margin">12</van-tag>
-          <van-tag type='primary' class="right-margin">18</van-tag>
+          <van-tag type='primary' class='right-margin' wx:for="{{value.time}}" wx:key='*this'>{{item}}</van-tag>
         </view>
       </view>
-      <view class='row-location'>西安电子科技大学(南校区)图书馆</view>
-      <view class='row-location'>西安电子科技大学(南校区)竹园1号</view>
+      <view class='row-location' wx:key='lat' wx:for='{{value.location}}'>{{item.name}}</view>
     </view>
-    <van-icon color='#ab0005' name='minus' size='28px' style="margin-top: 5px;" />
-  </view>
-  <view class='tagcard'>
-    <view class='card-left'>
-      <view class='name-time-row'>
-        <view class='tag-name right-margin'>吃饭</view>
-        <view class='row-time-vec'>
-          <van-tag type='primary' class='right-margin'>3</van-tag>
-          <van-tag type='primary' class="right-margin">5</van-tag>
-          <van-tag type='primary' class="right-margin">12</van-tag>
-          <van-tag type='primary' class="right-margin">18</van-tag>
-        </view>
-      </view>
-      <view class='row-location'>西安电子科技大学(南校区)图书馆</view>
-      <view class='row-location'>西安电子科技大学(南校区)竹园1号</view>
-    </view>
-    <van-icon color='#ab0005' name='minus' size='28px' style="margin-top: 5px;" />
-  </view>
-  <view class='tagcard'>
-    <view class='card-left'>
-      <view class='name-time-row'>
-        <view class='tag-name right-margin'>吃饭</view>
-        <view class='row-time-vec'>
-          <van-tag type='primary' class='right-margin'>3</van-tag>
-          <van-tag type='primary' class="right-margin">5</van-tag>
-          <van-tag type='primary' class="right-margin">12</van-tag>
-          <van-tag type='primary' class="right-margin">18</van-tag>
-        </view>
-      </view>
-      <view class='row-location'>西安电子科技大学(南校区)图书馆</view>
-      <view class='row-location'>西安电子科技大学(南校区)竹园1号</view>
-    </view>
-    <van-icon color='#ab0005' name='minus' size='28px' style="margin-top: 5px;" />
-  </view>
-  <view class='tagcard'>
-    <view class='card-left'>
-      <view class='name-time-row'>
-        <view class='tag-name right-margin'>吃饭</view>
-        <view class='row-time-vec'>
-          <van-tag type='primary' class='right-margin'>3</van-tag>
-          <van-tag type='primary' class="right-margin">5</van-tag>
-          <van-tag type='primary' class="right-margin">12</van-tag>
-          <van-tag type='primary' class="right-margin">18</van-tag>
-        </view>
-      </view>
-      <view class='row-location'>西安电子科技大学(南校区)图书馆</view>
-      <view class='row-location'>西安电子科技大学(南校区)竹园1号</view>
-    </view>
-    <van-icon color='#ab0005' name='minus' size='28px' style="margin-top: 5px;" />
+    <van-icon wx:if='{{key!="普通"}}' bindtap='deleteTag' color='#ab0005' name='minus' data-name='{{key}}' size='28px'
+      style="margin-top: 5px;" />
   </view>
   <view style="height: 40px;" />
   <view style='display: flex;flex-direction:column;align-items: center;font-size:smaller'>
-    <view style='color:var(--main-gray);'>rzbdz/wechat_miniprog_gtd@github</view>
-    <view style='color:var(--main-gray);'>Welcome to open issues and contribute codes.</view>
+    <view style='color:var(--main-gray);'>感谢使用本应用</view>
+    <view style='color:var(--main-gray);'>wechat_miniprog_gtd@github</view>
     <view style='color:var(--main-gray);display: flex;flex-direction: row;align-items: center;'>
       <view>@🐹 Copycat: rzbdz</view>
     </view>
@@ -87,43 +37,16 @@
 <van-popup show="{{_popup_show }}" custom-style='bottom:50px;max-height:70%;' position="bottom" bind:close="onClose">
   <view class='meta-block-shadow bottom-margin'>
     <view class='flex-row header-font'>
-      <input maxlength='10' placeholder="输入标签名" />
+      <input value='{{local_name}}' bindblur='enterNewName' maxlength='10' placeholder="输入标签名" />
       <van-icon bindtap='edittitle' name='edit' />
     </view>
   </view>
   <view class='meta-block-shadow bottom-margin'>
     <view style="font-weight: bold;">至多 4 个时间点:</view>
-    <van-checkbox-group value='{{result}}' bind:change="newtagtimes" max="{{4}}">
+    <van-checkbox-group value='{{local_time}}' bind:change="newtagtimes" max="{{4}}">
       <van-grid border='{{false}}' column-num='5'>
-        <van-grid-item use-slot>
-          <van-checkbox name="t6">06</van-checkbox>
-        </van-grid-item>
-        <van-grid-item use-slot>
-          <van-checkbox name="t8">08</van-checkbox>
-        </van-grid-item>
-        <van-grid-item use-slot>
-          <van-checkbox name="t10">10</van-checkbox>
-        </van-grid-item>
-        <van-grid-item use-slot>
-          <van-checkbox name="t12">12</van-checkbox>
-        </van-grid-item>
-        <van-grid-item use-slot>
-          <van-checkbox name="t14">14</van-checkbox>
-        </van-grid-item>
-        <van-grid-item use-slot>
-          <van-checkbox name="t16">16</van-checkbox>
-        </van-grid-item>
-        <van-grid-item use-slot>
-          <van-checkbox name="t18">18</van-checkbox>
-        </van-grid-item>
-        <van-grid-item use-slot>
-          <van-checkbox name="t20">20</van-checkbox>
-        </van-grid-item>
-        <van-grid-item use-slot>
-          <van-checkbox name="t22">22</van-checkbox>
-        </van-grid-item>
-        <van-grid-item use-slot>
-          <van-checkbox name="t00">00</van-checkbox>
+        <van-grid-item wx:key='*this' wx:for='{{_checkbox_arr}}' use-slot>
+          <van-checkbox name="{{item}}">{{item}}</van-checkbox>
         </van-grid-item>
       </van-grid>
     </van-checkbox-group>
@@ -131,18 +54,18 @@
   <view class='meta-block-shadow'>
     <view style="font-weight: bold;">至多 2 个地理属性:</view>
     <van-divider />
-    <view class='flex-row' bindtap='loc1'>
-      <view style="color: var(--main-gray)">请添加一个定位 (需要权限)</view>
-      <!--<view>西安电子科技大学南校区图书馆</view>-->
+    <view class='flex-row' bindtap='locTap1'>
+      <view wx:if="{{local_loca.length == 0}}" style="color: var(--main-gray)">请添加一个定位 (需要权限)</view>
+      <view wx:else>{{local_loca[0].name}}</view>
       <van-icon class='large-red' name='location-o' />
     </view>
     <van-divider />
-    <view class='flex-row' bindtap='loc2'>
-      <view style="color: var(--main-gray)">请添加一个定位 (需要权限)</view>
-      <!--<view>竹园一号</view>-->
+    <view class='flex-row' bindtap='locTap2'>
+      <view wx:if="{{local_loca.length <= 1}}" style="color: var(--main-gray)">请添加一个定位 (需要权限)</view>
+      <view wx:else>{{local_loca[1].name}}</view>
       <van-icon class='large-red' name='location-o' />
     </view>
   </view>
-  <van-icon bindtap="addclicked" class="addbutton" size='16px' color="white" name="success" style='bottom:6rem' />
+  <van-icon bindtap="addATag" class="addbutton" size='16px' color="white" name="success" style='bottom:6rem' />
   <view style="height: 24vw;" />
 </van-popup>

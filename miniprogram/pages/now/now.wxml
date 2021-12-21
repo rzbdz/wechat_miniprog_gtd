@@ -1,14 +1,21 @@
 <view id='container'>
   <scroll-view placeholder="true" scroll-y='true' class="sv">
-    <van-notice-bar wrapable color='white' background='var(--main-red)' scrollable='{{false}}'
-      text="(●ˇ∀ˇ●) 现在是 16 时, 你有 8 件任务超限, 现在你在北京, 为你提示待办任务如下:" />
-    <view id='recm-block' wx:for="{{lists}}" wx:key="description">
+    <van-notice-bar wx:if='{{empty}}' wrapable color='white' background='var(--main-red)' scrollable='{{false}}'
+      text="(＃°Д°) 你现在什么任务都没有，赶快到项目页添加一个任务吧！" />
+    <van-notice-bar wx:elif='{{lists[0].list.length > 0 }}' wrapable color='white' background='var(--main-red)'
+      scrollable='{{false}}'
+      text="(●ˇ∀ˇ●) 现在是 {{hour}} 时, 你有 {{lists[0].list.length }} 件任务超限, 请尽快完成，根据位置及时间标签为你提示待办任务如下:" />
+    <van-notice-bar wx:else wrapable color='white' background='var(--main-red)' scrollable='{{false}}'
+      text="( •̀ ω •́ ) 现在是 {{hour}} 时, 你的所有项目正常进行, 根据位置及时间标签为你提示待办任务如下:" />
+    <view id='recm-block' wx:if='{{fitem.list.length > 0 }}' wx:for="{{lists}}" wx:for-item='fitem'
+      wx:key="description">
       <view bindtap="foldExpand" class='header-font' id='recm-block-header' data-index="{{index}}">
-        <van-icon style="margin-right: 10px;" name="{{item.fold == true ? 'arrow' :'arrow-down'}}"></van-icon>
-        <view>{{item.description}}</view>
+        <van-icon style="margin-right: 10px;" name="{{fitem.fold == true ? 'arrow' :'arrow-down'}}"></van-icon>
+        <view>{{fitem.description}}</view>
       </view>
-      <view wx:if="{{item.fold == false}}">
-        <entry-card wx:for="{{item.list}}" wx:key='iid' entry="{{item}}" bindcheck="testbind" />
+      <view wx:if="{{fitem.fold == false}}">
+        <entry-card wx:for="{{fitem.list}}" wx:if="{{fitem.showdone || !item.done}}" wx:key='iid' entry="{{item}}"
+          bindcheck="checkEntry" bindclick='cardClicked' />
       </view>
     </view>
     <view style="min-height: 20vh" />

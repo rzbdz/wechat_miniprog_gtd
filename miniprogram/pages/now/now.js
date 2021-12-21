@@ -1,14 +1,20 @@
+const { TodoData, DateUtil } = require("../../utils/myutils");
+
 // pages/now/now.js
+var app = getApp();
 Page({
   /**
    * 页面的初始数据
    */
   data: {
+    hour: 0,
+    empty: false,
     lists: [
-      { description: "超限", fold: false, list: [] },
-      { description: "位置", fold: false, list: [] },
-      { description: "时间", fold: false, list: [] },
-      { description: "最近添加", fold: false, list: [] },
+      { description: "超限", fold: false, list: [], showdone: false },
+      { description: "位置", fold: false, list: [], showdone: false },
+      { description: "时刻", fold: false, list: [], showdone: false },
+      { description: "今天截至", fold: false, list: [], showdone: false },
+      { description: "最近添加", fold: true, list: [], showdone: true },
     ]
   },
   foldExpand: function(e) {
@@ -22,58 +28,98 @@ Page({
     })
     // console.log(i + ', ' + this.data.lists[i].fold);
   },
-  /**
-   * @param  title 
-   * @param  project 
-   * @param  tag 
-   * @param  date 
-   *   if today, pass in time, if not today pass in date string.
-   * @param {bool} outofdate 
-   * @param {int} which 
-   */
-  additem: function(title, project, tag, date, outofdate, waiting, done, which, iid = 0) {
-    this.data.lists[which].list.push({
-      title: title,
-      project: project,
-      tag: tag,
-      date: date,
-      outofdate: outofdate,
-      waiting: waiting,
-      done: done,
-      iid: iid,
-    })
-  },
   expirein: 0,
   locin: 1,
   timein: 2,
-  recentin: 3,
+  duein: 3,
+  recentin: 4,
   sortlilsts: function() {
-    this.data.lists.forEach(e => {
-      e.list.sort((a, b) => a.date.localeCompare(b.date))
-    });
-    this.data.lists[this.recentin].list.reverse();
+    this.data.lists[0].list.sort((a, b) => a.date.localeCompare(b.date));
+    this.data.lists[1].list.sort((a, b) => a.date.localeCompare(b.date));
+    this.data.lists[2].list.sort((a, b) => a.date.localeCompare(b.date));
+  },
+  updateView: function() {
+    var updatedata = {};
+    updatedata['lists[' + this.expirein + '].list'] = app.getExpiredEList();
+    updatedata['lists[' + this.timein + '].list'] = app.getTimeEList();
+    updatedata['lists[' + this.recentin + '].list'] = app.getRecentAdd();
+    updatedata['lists[' + this.duein + '].list'] = app.getTodayEList();
+    updatedata['hour'] = DateUtil.getNowHour();
+    this.setData(updatedata);
+    console.log(updatedata, 'fuck the what?');
+  },
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function() {
+    this.getTabBar().init();
+    var _this = this;
+    if (app.isEmpty()) {
+      this.setData({
+        empty: true,
+      })
+    } else {
+      this.setData({
+        empty: false,
+      })
+    }
+    this.updateView();
+    if (!this.data.empty) {
+      wx.getLocation({
+        success(res) {
+          var loc = new TodoData.Location(res.latitude, res.longitude, '定位数据没有名称');
+          // console.log(loc);
+          var updatedata = {};
+          updatedata['lists[' + _this.locin + '].list'] = app.getLocationEList(loc);
+          _this.setData(updatedata);
+        },
+        fail() {
+          wx.showModal({
+            title: "提示",
+            content: '请确定您打开了定位权限, 当前将启动无位置服务模式。',
+            showCancel: false,
+            success: function(res) {
+              // console.log(res);
+            }
+          })
+          var updatedata = {};
+          updatedata['lists[' + _this.locin + '].list'] = [];
+          _this.setData(updatedata);
+        }
+      })
+    } else {
+      var updatedata = {};
+      updatedata['lists[' + _this.locin + '].list'] = [];
+      _this.setData(updatedata);
+    }
+  },
+  checkEntry: function(e) {
+    // console.log(e.detail, "should be iid");
+    if (e.detail.check) {
+      TodoData.doneEntry(s => app.getEntry(s), app.getEntry(e.detail.iid));
+    } else {
+      TodoData.undoneEntry(s => app.getEntry(s), app.getEntry(e.detail.iid));
+    }
+    this.updateView();
+  },
+  cardClicked: function(e) {
+    // console.log(e.detail, "should be iid");
+    var _this = this;
+    wx.navigateTo({
+      url: '/pages/entrydetail/entrydetail?type=read&iid=' + e.detail,
+      events: {
+        fuckme: function(data) {
+          // console.log('go back to me, check local: ', localObject);
+        }
+      },
+      success: function(res) {}
+    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.additem("学nosql存储模式", "微信小程序", '工作', '2022-12-14', false, false, true, this.locin);
-    this.additem("借数据库教材", "数据库期末", '出行', '2021-12-14', false, false, false, this.timein);
-    this.additem("打电话给非洲", "非洲水电", '工作', '2020-12-12', true, false, false, this.expirein);
-    this.additem("打灰", "洲际导弹订单", '军工', '2021-12-14', false, false, false, this.recentin);
-    this.additem("学nosql存储模式", "微信小程序", '工作', '2018-12-14', false, true, false, this.locin);
-    this.additem("借数据库教材", "数据库期末", '出行', '2017-12-14', false, false, false, this.timein);
-    this.additem("打电话给非洲", "非洲水电", '工作', '2016-12-12', true, false, false, this.expirein);
-    this.additem("打灰", "洲际导弹订单", '军工', '2021-12-11', false, false, false, this.recentin);
-    this.additem("学nosql存储模式", "微信小程序", '工作', '2015-12-14', false, false, false, this.locin);
-    this.additem("借数据库教材", "数据库期末", '出行', '2021-12-12', false, false, false, this.timein);
-    this.additem("打电话给非洲", "非洲水电", '工作', '2021-12-14', true, true, false, this.expirein);
-    this.additem("打灰", "洲际导弹订单", '军工', '2021-12-14', false, false, false, this.recentin);
-    this.sortlilsts();
-    this.setData({
-      lists: this.data.lists,
-    })
-    console.log(this.data.lists)
+
   },
 
   /**
@@ -83,13 +129,6 @@ Page({
 
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-    this.getTabBar().init();
-
-  },
 
   /**
    * 生命周期函数--监听页面隐藏
@@ -131,6 +170,6 @@ Page({
     })
   },
   testbind: function(e) {
-    console.log(e)
+    // console.log(e)
   }
 })

@@ -41,5 +41,8 @@ Component({
       // console.log('in compo entry', e);
       this.triggerEvent("check", { iid: this.data.entry.iid, check: e.detail.value });
     },
+    _long() {
+      this.triggerEvent("long", this.data.entry.iid);
+    },
   }
 })

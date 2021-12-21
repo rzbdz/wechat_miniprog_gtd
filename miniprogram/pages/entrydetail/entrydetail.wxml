@@ -1,6 +1,5 @@
 <!--pages/entrydetail/entrydetail.wxml-->
 <page-meta page-style="{{ (_pre_popup_show || _tag_popup_show) ? 'overflow: hidden;' : '' }}" />
-<button bindtap='go'>Let me go!</button>
 <scroll-view style="height: 100vh;width: 100vw; " scroll-y='true'>
   <!--WARNING MESSAGE-->
   <van-notice-bar wx:if='{{entry.viewdata.outofdate}}' left-icon='info-o' text='此任务已逾期，请调整或修改截至日期！'
@@ -57,7 +56,7 @@
     <view wx:for='{{prereq}}' wx:for-index='key' wx:for-item='value' wx:key='iid'>
       <van-divider />
       <view class='flex-row'>
-        <view class='item'>{{value.title}}</view>
+        <view class='item'>{{value.name}}</view>
         <van-icon bindtap='deletePrereqClicked' data-iid='{{key}}' color='var(--main-red)' class='large-red'
           name='minus' />
       </view>
@@ -73,9 +72,10 @@
   </view>
   <view style="height: 30vh;" />
 </scroll-view>
-<van-calendar style="z-index:999;" bind:confirm='confirmCalendar' bind:close='closeCalendar' show='{{_show_calendar}}'
-  color="var(--main-red)" />
-<van-icon bindtap="addclicked" class="addbutton" size='16px' color="white" name="success" style='bottom:3rem' />
+<van-calendar style="z-index:999;" bind:confirm='confirmCalendar' bind:close='closeCalendar' 
+  show='{{_show_calendar}}' color="var(--main-red)" />
+<van-icon wx:if='{{false}}' bindtap="saveButtonClicked" class="addbutton" size='16px' color="white" name="success"
+  style='bottom:3rem' />
 
 <van-popup show="{{ _tag_popup_show }}" custom-style='max-height:70%;' position="bottom" bind:close="tagPopupOnClose">
   <view style="padding:var(--normal-margin);">
@@ -99,6 +99,7 @@
       </view>
     </radio-group>
   </view>
+  <view style="color: gray;font-size:smaller;align-self: center;">只有在设置页面中添加成功的标签会在此处显示</view>
 </van-popup>
 
 <van-popup show="{{ _pre_popup_show }}" custom-style='max-height:70%;' position="bottom" bind:close="prePopupOnClose">
@@ -109,10 +110,11 @@
     <radio-group bindchange='preChange'>
       <view class='tagcard' wx:for='{{canPre}}' wx:for-index='key' wx:for-item='value' wx:key='iid'>
         <label for='{{key}}'>
-          <view class='tag-name right-margin'>{{value.title}}</view>
+          <view class='tag-name right-margin'>{{value.name}}</view>
         </label>
         <radio id='{{key}}' checked='{{false}}' color='#ab0005' value='{{key}}' />
       </view>
     </radio-group>
   </view>
+  <view style="color: gray;font-size:smaller;align-self: center;">只有启动日期在本项目之前的才能够添加依赖</view>
 </van-popup>

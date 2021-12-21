@@ -33,10 +33,11 @@ Page({
           // },
         },
         success: function(res) {
-          console.log(res.result.message)
+          // console.log(res.result.message)
           var userData = res.result.data;
-          console.log(res.result.data);
+          // console.log(res.result.data);
           getApp().fillUser(userData);
+          getApp().updateAllSubView();
           wx.switchTab({
             url: '/pages/now/now',
           })

@@ -1,7 +1,7 @@
 <!--components/projectcard/projectcard.wxml-->
-<view class="card" catchtap="_cardclicked" catchlongtap='_long'>
+<view class="card" catchtap="_cardclicked" catchlongpress='_long'>
   <view class='card-row'>
-    <van-circle size="80" class="circlet" value="{{ project.progress}}" stroke-width="8" layer-color="#DDDDDD"
+    <van-circle size="80" class="circlet" value="{{ project.progress}}" stroke-width="8" speed='100' layer-color="#DDDDDD"
       color="#ab0005">
       <text class="circlet-text">{{project.viewdata.score}}</text>
     </van-circle>
@@ -10,13 +10,13 @@
       <view class='card-kv'>
         <text class='right-margin bold-font'>期限:
         </text>
-        <text class='right-margin card-des-ddl'>{{project.viewdata.datestr}}</text>
-        <van-tag wx:if="{{project.done!=project.total}}" class='right-margin'
-          type='{{project.viewdata.countdown <= 0 ? "danger" : "success"}}'>
-          {{project.viewdata.countdown}}天
-        </van-tag>
+        <text class='right-margin card-des-ddl'>{{project.viewdata.duedatestr}}</text>
         <van-tag wx:if="{{project.done==project.total || project.done!=0}}" class='right-margin' type='success'>
           已完成!
+        </van-tag>
+        <van-tag wx:elif="{{project.done!=project.total}}" class='right-margin'
+          type='{{(project.viewdata.countdown <= 0 ) ? "danger" : "success"}}'>
+          {{project.viewdata.countdown}}天
         </van-tag>
       </view>
       <view style="font-size: small;">

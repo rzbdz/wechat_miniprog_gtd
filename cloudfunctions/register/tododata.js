@@ -113,13 +113,13 @@ exports.TodoData = {
      * @param {function(Object)=>Object{done:boolean, wait: boolean, updateAgg()}} mapSub 
      */
     this._updateAggFromSubs = function(mapSub) {
-      console.log(this)
+      // console.log(this)
       var done_count = 0;
       var wait_count = 0;
       var ood_count = 0;
       this.subs.forEach(e => {
         var s = mapSub(e);
-        console.log("from the map:", s, "the id use :", e);
+        // console.log("from the map:", s, "the id use :", e);
         done_count += s.done ? 1 : 0;
         wait_count += s.isWaiting() ? 1 : 0;
         ood_count += s.isOutOfDate() ? 1 : 0;
@@ -127,8 +127,8 @@ exports.TodoData = {
       this.waiting = wait_count;
       this.done = done_count;
       this.outofdate = ood_count;
-      console.log(this.subs.length);
-      console.log("subs: ", this.subs);
+      // console.log(this.subs.length);
+      // console.log("subs: ", this.subs);
       this.total = this.subs.length;
       this.progress = Math.floor(this.done / this.total * 100);
       this.cando = this.total - this.waiting;
@@ -198,7 +198,7 @@ exports.TodoData = {
    * removeSub(iid)<br/>
    */
   createProject: function(title, duedate, subs = []) {
-    console.log(subs);
+    // console.log(subs);
     var p = new this.Project();
     p.pid = DateUtil.genUID('pro');
     p.title = title;

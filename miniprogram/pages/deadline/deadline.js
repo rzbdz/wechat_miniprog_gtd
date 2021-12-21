@@ -11,11 +11,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.setData({ projectlist: app.getProjectList() });
   },
   delete: function(e) {
-    console.log('user delete something', e.detail, " should be pid!");
-    console.log('longtab')
+    // console.log('user delete something', e.detail, " should be pid!");
+    // console.log('longtab')
     var _this = this;
     wx.showModal({
       cancelColor: 'green',
@@ -40,9 +39,9 @@ Page({
       url: '/pages/ddldetail/ddldetail?type=add',
       events: {
         sendBack: function(data) {
-          console.log('i am in ddl, add button', data)
+          // console.log('i am in ddl, add button', data)
           if (data.type == 'added') {
-            console.log(app.getProjectList());
+            // console.log(app.getProjectList());
             _this.setData({
               projectlist: app.getProjectList()
             });
@@ -56,13 +55,14 @@ Page({
   },
   cardClicked: function(e) {
     var _this = this;
+    // console.log(e.detail);
     wx.navigateTo({
       url: '/pages/ddldetail/ddldetail?type=read&pid=' + e.detail,
       events: {
         sendBack: function(data) {
-          console.log('i am in ddl, add button', data)
+          // console.log('i am in ddl, add button', data)
           if (data.type == 'added') {
-            console.log(app.getProjectList());
+            // console.log(app.getProjectList());
             _this.setData({
               projectlist: app.getProjectList()
             });
@@ -85,6 +85,7 @@ Page({
   onShow: function() {
     this.getTabBar()
       .init();
+    this.setData({ projectlist: app.getProjectList() });
   },
 
   /**
